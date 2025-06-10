@@ -1,6 +1,6 @@
 import tugas2.Server;
 
-public class tugas2 {
+public class Tugas2 {
 
     public static void main(String[] args) throws Exception {
         int port = 8080;
