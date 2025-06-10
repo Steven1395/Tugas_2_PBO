@@ -25,3 +25,9 @@ public class Tugas2 {
 
 // javac -d bin -cp "lib/*" src/tugas2/*.java src/controller/*.java src/model/*.java src/Tugas2.java
 // (compile semua file)
+
+
+// langkah-langkah compile Fiks!!!:
+// cd dulu ke tugas2APIVilla
+// javac -d bin -cp "lib/*" src/tugas2/*.java src/controller/*.java src/model/*.java src/Tugas2.java
+// java --% -Djava.net.preferIPv4Stack=true -cp "bin;lib/*" Tugas2

@@ -35,9 +35,17 @@ public class Server {
         String path = uri.getPath();
         String method = httpExchange.getRequestMethod();
         System.out.printf("path: %s\n", path);
-
+        
+        // get semua villa
         if (method.equals("GET") && path.equals("/villa")) {
             VillaController.getAll(res);
+            return;
+        }
+
+        //get berdasar idnya
+        if (method.equals("GET") && path.matches("^/villa/\\d+$")) {
+            int id = Integer.parseInt(path.substring("/villa/".length()));
+            controller.VillaController.getById(id, res);
             return;
         }
 

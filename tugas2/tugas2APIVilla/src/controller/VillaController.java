@@ -24,5 +24,21 @@ public class VillaController {
             res.send(500);
         }
     }
+
+    public static void getById(int id, Response res) {
+        try {
+            // Dummy data sementara
+            Villa villa = new Villa(3, "Jawa Villa", "Surabaya", 900000);
+    
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(villa);
+    
+            res.setBody(json);
+            res.send(200);
+        } catch (Exception e) {
+            res.setBody("{\"message\":\"Villa not found\"}");
+            res.send(404);
+        }
+    }
 }
 
