@@ -22,3 +22,6 @@ public class Tugas2 {
 // coba kalo ga bisa ke jacksonnya pake ini (compilenya pake ini, CMIIW)
 // javac -d bin -cp "lib/*" src/Tugas2/*.java src/Tugas2.java
 // java --% -Djava.net.preferIPv4Stack=true -cp "bin;lib/*" Tugas2
+
+// javac -d bin -cp "lib/*" src/tugas2/*.java src/controller/*.java src/model/*.java src/Tugas2.java
+// (compile semua file)

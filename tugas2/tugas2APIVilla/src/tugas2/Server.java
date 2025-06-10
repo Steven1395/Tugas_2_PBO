@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import controller.VillaController;
 
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -32,7 +33,13 @@ public class Server {
 
         URI uri = httpExchange.getRequestURI();
         String path = uri.getPath();
+        String method = httpExchange.getRequestMethod();
         System.out.printf("path: %s\n", path);
+
+        if (method.equals("GET") && path.equals("/villa")) {
+            VillaController.getAll(res);
+            return;
+        }
 
         // Handle request dan autentikasi dalam block try-catch dibawah. Tapi apa semua harus diletakkan disini?
         try {
