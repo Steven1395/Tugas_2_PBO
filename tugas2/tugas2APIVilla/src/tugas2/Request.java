@@ -19,12 +19,30 @@ public class Request {
     private final HttpExchange httpExchange;
     private Headers headers;
     private String rawBody;
-
     private String jsonBody;
+    private HttpExchange exchange;
 
     public Request(HttpExchange httpExchange) {
         this.httpExchange = httpExchange;
-         this.headers = httpExchange.getRequestHeaders();
+        this.headers = httpExchange.getRequestHeaders();
+        this.exchange = httpExchange;
+    }
+
+    public String getQueryParam(String key) {
+        String query = exchange.getRequestURI().getQuery();
+        if (query == null) return null;
+
+        for (String pair : query.split("&")) {
+            String[] parts = pair.split("=");
+            if (parts.length == 2 && parts[0].equals(key)) {
+                try {
+                    return java.net.URLDecoder.decode(parts[1], "UTF-8");
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+        }
+        return null;
     }
 
     public String getBody() {

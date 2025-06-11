@@ -5,6 +5,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import controller.VillaController;
+import controller.RoomsController;
+import controller.BookingsController;
+import controller.ReviewsController;
 
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -59,6 +62,56 @@ public class Server {
             System.out.println(e.getMessage());
         }
 
+        //  IF untuk GET /villa/{id}/rooms
+
+        if (method.equals("GET") && path.matches("^/villa/\\d+/rooms$")) {
+            try {
+                String[] parts = path.split("/");
+                int villaId = Integer.parseInt(parts[2]); // /villa/{id}/rooms
+                RoomsController.getByVillaId(villaId, res);
+                return;
+            }
+            catch (Exception e) {
+                res.setBody("{\"message\": \"Invalid ID\"}");
+                res.send(400);
+                return;
+            }
+        }
+
+        // get villa/bookings
+        if (method.equals("GET") && path.matches("^/villa/\\d+/bookings$")) {
+            try {
+                String[] parts = path.split("/");
+                int villaId = Integer.parseInt(parts[2]);
+                BookingsController.getByVillaId(villaId, res);
+                return;
+            } catch (Exception e) {
+                res.setBody("{\"message\": \"Invalid ID\"}");
+                res.send(400);
+                return;
+            }
+        }
+
+        //get reviews
+        if (method.equals("GET") && path.matches("^/villa/\\d+/reviews$")) {
+            try {
+                String[] parts = path.split("/");
+                int villaId = Integer.parseInt(parts[2]);
+                ReviewsController.getByVillaId(villaId, res);
+                return;
+            } catch (Exception e) {
+                res.setBody("{\"message\": \"Invalid ID\"}");
+                res.send(400);
+                return;
+            }
+        }
+
+        if (method.equals("GET") && path.equals("/villas")) {
+            VillaController.getAvailable(req, res);
+            return;
+        }
+
+
         // Handle response disini jika tidak ada yg menghandle
         if (!res.isSent()) {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -75,6 +128,8 @@ public class Server {
             res.send(HttpURLConnection.HTTP_OK);
             return;
         }
+
+
 
         httpExchange.close();
     }
