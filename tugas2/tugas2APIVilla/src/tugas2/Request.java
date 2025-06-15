@@ -79,5 +79,12 @@ public class Request {
         return jsonMap;
     }
 
+        public String getPath() {
+        return httpExchange.getRequestURI().getPath();
+    }
+
+    public String getMethod() {
+        return httpExchange.getRequestMethod();
+    }
 
 }

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import controller.VillaController;
-import controller.RoomsController;
-import controller.BookingsController;
-import controller.ReviewsController;
+import controllers.*;
 
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -39,18 +36,89 @@ public class Server {
         String method = httpExchange.getRequestMethod();
         System.out.printf("path: %s\n", path);
         
+
+        // SEMUA ENDPOINT VILLA
+
         // get semua villa
-        if (method.equals("GET") && path.equals("/villa")) {
-            VillaController.getAll(res);
+        if (req.getPath().equals("/villas") && req.getMethod().equals("GET")) {
+            VillaController.getAll(req, res);
             return;
         }
 
         //get berdasar idnya
-        if (method.equals("GET") && path.matches("^/villa/\\d+$")) {
-            int id = Integer.parseInt(path.substring("/villa/".length()));
-            controller.VillaController.getById(id, res);
+        if (req.getMethod().equals("GET") && req.getPath().matches("^/villas/\\d+$")) {
+            int id = Integer.parseInt(req.getPath().substring("/villas/".length()));
+            VillaController.getById(req, res, id);
             return;
         }
+
+        
+        // GET /villa/{id}/rooms
+        if (req.getMethod().equals("GET") && req.getPath().matches("^/villas/\\d+/rooms$")) {
+            int villaId = Integer.parseInt(req.getPath().split("/")[2]);
+            RoomsController.getByVillaId(villaId, res);
+            return;
+        }
+
+
+        // get villa/bookings
+        if (req.getMethod().equals("GET") && req.getPath().matches("^/villas/\\d+/bookings$")) {
+            int villaId = Integer.parseInt(req.getPath().split("/")[2]);
+            BookingsController.getByVillaId(villaId, res);
+            return;
+        }
+
+
+        //get reviews
+        if (req.getMethod().equals("GET") && req.getPath().matches("^/villas/\\d+/reviews$")) {
+            int villaId = Integer.parseInt(req.getPath().split("/")[2]);
+            ReviewsController.getByVillaId(villaId, res);
+            return;
+        }
+
+    
+        //get by date
+        if (req.getMethod().equals("GET") && req.getPath().equals("/villas") &&
+            req.getQueryParam("ci_date") != null && req.getQueryParam("co_date") != null) {
+
+            VillaController.searchByDate(req, res);
+            return;
+        }
+
+
+        //post insert villa
+        if (req.getMethod().equals("POST") && req.getPath().equals("/villas")) {
+            VillaController.create(req, res);
+            return;
+        }
+
+
+        //post insert rooms villa
+        if (req.getMethod().equals("POST") && req.getPath().matches("^/villas/\\d+/rooms$")) {
+            int villaId = Integer.parseInt(req.getPath().split("/")[2]);
+            RoomsController.addToVilla(villaId, req, res);
+            return;
+        }
+
+
+
+
+        // SEMUA ENDPOINT CUSTOMER
+
+
+
+
+
+
+
+        // SEMUA ENDPOINT VOUCHER
+
+
+
+
+
+
+
 
         // Handle request dan autentikasi dalam block try-catch dibawah. Tapi apa semua harus diletakkan disini?
         try {
@@ -61,56 +129,6 @@ public class Server {
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
-
-        //  IF untuk GET /villa/{id}/rooms
-
-        if (method.equals("GET") && path.matches("^/villa/\\d+/rooms$")) {
-            try {
-                String[] parts = path.split("/");
-                int villaId = Integer.parseInt(parts[2]); // /villa/{id}/rooms
-                RoomsController.getByVillaId(villaId, res);
-                return;
-            }
-            catch (Exception e) {
-                res.setBody("{\"message\": \"Invalid ID\"}");
-                res.send(400);
-                return;
-            }
-        }
-
-        // get villa/bookings
-        if (method.equals("GET") && path.matches("^/villa/\\d+/bookings$")) {
-            try {
-                String[] parts = path.split("/");
-                int villaId = Integer.parseInt(parts[2]);
-                BookingsController.getByVillaId(villaId, res);
-                return;
-            } catch (Exception e) {
-                res.setBody("{\"message\": \"Invalid ID\"}");
-                res.send(400);
-                return;
-            }
-        }
-
-        //get reviews
-        if (method.equals("GET") && path.matches("^/villa/\\d+/reviews$")) {
-            try {
-                String[] parts = path.split("/");
-                int villaId = Integer.parseInt(parts[2]);
-                ReviewsController.getByVillaId(villaId, res);
-                return;
-            } catch (Exception e) {
-                res.setBody("{\"message\": \"Invalid ID\"}");
-                res.send(400);
-                return;
-            }
-        }
-
-        if (method.equals("GET") && path.equals("/villas")) {
-            VillaController.getAvailable(req, res);
-            return;
-        }
-
 
         // Handle response disini jika tidak ada yg menghandle
         if (!res.isSent()) {

@@ -1,132 +1,110 @@
-    package controller;
+package controllers;
 
-    import com.fasterxml.jackson.databind.ObjectMapper;
-    import model.Villa;
-    import model.Bookings;
-    import tugas2.Request;
-    import tugas2.Response;
+import services.VillaService;
+import tugas2.Response;
+import tugas2.Request;
+import models.Villa;
+import java.util.List;
+import java.util.Map;
 
-    import java.time.LocalDate;
-    import java.util.ArrayList;
-    import java.util.HashSet;
-    import java.util.List;
-    import java.util.Set;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class VillaController {
-    public static void getAll(Response res) {
+    private static VillaService villaService = new VillaService();
+
+    public static void getAll(Request req, Response res) {
         try {
-            List<Villa> data = new ArrayList<>();
-            data.add(new Villa(1, "Villa Mawar", "Ubud", 800000));
-            data.add(new Villa(2, "Villa Melati", "Sanur", 950000));
-
+            List<Villa> villas = villaService.getAllVillas();
             ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(data);
-
+            String json = mapper.writeValueAsString(villas);
             res.setBody(json);
             res.send(200);
         } catch (Exception e) {
-            res.setBody("{\"message\":\"Internal Server Error\"}");
+            res.setBody("{\"error\": \"Gagal mengambil data vila\"}");
             res.send(500);
         }
     }
 
-    public static void getById(int id, Response res) {
+    public static void getById(Request req, Response res, int id) {
+        Villa villa = villaService.getVillaById(id);
+        if (villa == null) {
+            res.setBody("{\"error\": \"Villa not found\"}");
+            res.send(404);
+            return;
+        }
+
         try {
-            // Dummy data list
-            List<Villa> villaList = new ArrayList<>();
-            villaList.add(new Villa(3, "Villa Phyton", "Ubud", 800000));
-            villaList.add(new Villa(4, "Villa Jawa", "Malang", 950000));
-            villaList.add(new Villa(5, "Villa Angin", "Canggu", 900000));
-
-            // Cari villa yang id-nya cocok
-            Villa found = null;
-            for (Villa v : villaList) {
-                if (v.id == id) {
-                    found = v;
-                    break;
-                }
-            }
-
-            if (found == null) {
-                res.setBody("{\"message\": \"Villa with ID " + id + " not found\"}");
-                res.send(404);
-                return;
-            }
-
             ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(found);
-
+            String json = mapper.writeValueAsString(villa);
             res.setBody(json);
             res.send(200);
         } catch (Exception e) {
-            res.setBody("{\"message\": \"Internal Server Error\"}");
+            res.setBody("{\"error\": \"Gagal serialisasi villa\"}");
             res.send(500);
         }
     }
 
-    public static void getAvailable(Request req, Response res) {
-        try {
-            String ciStr = req.getQueryParam("ci_date");
-            String coStr = req.getQueryParam("co_date");
+    public static void searchByDate(Request req, Response res) {
+        String ci = req.getQueryParam("ci_date");
+        String co = req.getQueryParam("co_date");
 
-            if (ciStr == null || coStr == null) {
-                res.setBody("{\"message\": \"Missing check-in or check-out date\"}");
+        if (ci == null || co == null) {
+            res.setBody("{\"error\": \"Harap sertakan ci_date dan co_date.\"}");
+            res.send(400);
+            return;
+        }
+
+        List<Villa> villas = villaService.getAvailableVillas(ci, co);
+
+        if (villas.isEmpty()) {
+            res.setBody("{\"error\": \"Tidak ada vila tersedia di tanggal tersebut.\"}");
+            res.send(404);
+            return;
+        }
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(villas);
+            res.setBody(json);
+            res.send(200);
+        } catch (Exception e) {
+            res.setBody("{\"error\": \"Gagal mengkonversi data.\"}");
+            res.send(500);
+        }
+    }
+
+        public static void create(Request req, Response res) {
+        try {
+            Map<String, Object> body = req.getJSON();
+            if (body == null || !body.containsKey("id") || !body.containsKey("name") ||
+                !body.containsKey("description") || !body.containsKey("address")) {
+                res.setBody("{\"error\": \"Harap lengkapi semua data (id, name, description, address)\"}");
                 res.send(400);
                 return;
             }
 
-            LocalDate checkin = LocalDate.parse(ciStr);
-            LocalDate checkout = LocalDate.parse(coStr);
+            Villa villa = new Villa();
+            villa.setId((Integer) body.get("id"));
+            villa.setName((String) body.get("name"));
+            villa.setDescription((String) body.get("description"));
+            villa.setAddress((String) body.get("address"));
 
-            // Data dummy villas
-            List<Villa> allVillas = new ArrayList<>();
-            allVillas.add(new Villa(1, "Villa Mawar", "Ubud", 800000));
-            allVillas.add(new Villa(2, "Villa Melati", "Sanur", 950000));
-            allVillas.add(new Villa(3, "Villa Kenanga", "Seminyak", 750000));
+            boolean success = villaService.createVilla(villa);
 
-            // Data dummy bookings
-            List<Bookings> allBookings = new ArrayList<>();
-            allBookings.add(new Bookings(1, 101, 1, "2025-06-15 14:00:00", "2025-06-17 12:00:00", 500000, 0, 500000, "success", true, false));
-            allBookings.add(new Bookings(2, 102, 2, "2025-06-18 14:00:00", "2025-06-20 12:00:00", 600000, 0, 600000, "success", false, false));
-            allBookings.add(new Bookings(3, 103, 3, "2025-07-01 14:00:00", "2025-07-05 12:00:00", 800000, 100000, 700000, "success", false, false));
-
-            //  Cari villa yang dibooking dalam range tanggal
-            Set<Integer> villaIdBooked = new HashSet<>();
-            for (Bookings b : allBookings) {
-                LocalDate bCheckin = LocalDate.parse(b.checkinDate.substring(0, 10));
-                LocalDate bCheckout = LocalDate.parse(b.checkoutDate.substring(0, 10));
-
-                boolean overlap = !(bCheckout.isBefore(checkin) || bCheckin.isAfter(checkout.minusDays(1)));
-
-                if (overlap) {
-                    if (b.roomType == 1 || b.roomType == 2) {
-                        villaIdBooked.add(1); // roomType 1 & 2 = villa 1
-                    } else if (b.roomType == 3) {
-                        villaIdBooked.add(2); // roomType 3 = villa 2
-                    }
-                }
+            if (success) {
+                res.setBody("{\"message\": \"Villa berhasil ditambahkan\"}");
+                res.send(201);
+            } else {
+                res.setBody("{\"error\": \"Gagal menambahkan villa\"}");
+                res.send(500);
             }
-
-            // Filter villa yang tidak sedang dibooking (berarti tersedia)
-            List<Villa> available = new ArrayList<>();
-            for (Villa v : allVillas) {
-                if (!villaIdBooked.contains(v.id)) {
-                    available.add(v);
-                }
-            }
-
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(available);
-            res.setBody(json);
-            res.send(200);
 
         } catch (Exception e) {
             e.printStackTrace();
-            res.setBody("{\"message\":\"Internal Server Error\"}");
+            res.setBody("{\"error\": \"Kesalahan server saat memproses data\"}");
             res.send(500);
         }
     }
+
+
 }
-
-
-

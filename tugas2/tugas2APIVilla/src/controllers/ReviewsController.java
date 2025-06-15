@@ -1,40 +1,32 @@
-package controller;
+package controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.Reviews;
+import models.Review;
+import repositories.ReviewRepository;
 import tugas2.Response;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewsController {
+    private static final ReviewRepository repo = new ReviewRepository();
+
     public static void getByVillaId(int villaId, Response res) {
+        List<Review> reviews = repo.getReviewsByVillaId(villaId);
+
+        if (reviews.isEmpty()) {
+            res.setBody("{\"error\": \"Tidak ada review ditemukan untuk vila ini.\"}");
+            res.send(404);
+            return;
+        }
+
         try {
-            // dummy data: booking id 1 dan 2 dimiliki oleh villa id 1
-            List<Reviews> all = new ArrayList<>();
-            all.add(new Reviews(1, 5, "Luar biasa!", "Villa sangat bersih dan nyaman."));
-            all.add(new Reviews(2, 4, "Bagus tapi agak ramai", "Lingkungan agak bising, tapi oke."));
-
-            // dummy relasi booking id → villa id
-            List<Reviews> filtered = new ArrayList<>();
-            if (villaId == 1) {
-                filtered.add(all.get(0));
-                filtered.add(all.get(1));
-            }
-
-            if (filtered.isEmpty()) {
-                res.setBody("{\"message\":\"No reviews for this villa\"}");
-                res.send(404);
-                return;
-            }
-
             ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(filtered);
+            String json = mapper.writeValueAsString(reviews);
             res.setBody(json);
             res.send(200);
-
         } catch (Exception e) {
-            res.setBody("{\"message\":\"Internal Server Error\"}");
+            e.printStackTrace();
+            res.setBody("{\"error\": \"Gagal membaca data review.\"}");
             res.send(500);
         }
     }
