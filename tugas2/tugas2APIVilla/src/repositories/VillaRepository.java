@@ -115,5 +115,38 @@ public class VillaRepository {
     }
 
 
+    // METHOD UNTUK UPDATE VILLA
+    public boolean updateVilla(int id, Villa villa) {
+        String sql = "UPDATE villas SET name = ?, description = ?, address = ? WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setString(1, villa.getName());
+            stmt.setString(2, villa.getDescription());
+            stmt.setString(3, villa.getAddress());
+            stmt.setInt(4, id);
+    
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //METHOD HAPUS VILLA
+    public boolean deleteVilla(int id) {
+        String sql = "DELETE FROM villas WHERE id = ?";
+    
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }    
 
 }

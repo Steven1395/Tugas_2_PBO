@@ -106,5 +106,35 @@ public class VillaController {
         }
     }
 
+    public static void update(int id, Request req, Response res) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Villa updatedVilla = mapper.readValue(req.getBody(), Villa.class);
+    
+            boolean success = villaService.updateVilla(id, updatedVilla);
+            if (success) {
+                res.setBody("{\"message\": \"Villa berhasil diperbarui\"}");
+                res.send(200);
+            } else {
+                res.setBody("{\"error\": \"Villa tidak ditemukan\"}");
+                res.send(404);
+            }
+        } catch (Exception e) {
+            res.setBody("{\"error\": \"Gagal memperbarui data villa\"}");
+            res.send(500);
+        }
+    }
+
+    public static void delete(Request req, Response res, int id) {
+        boolean success = villaService.deleteVilla(id);
+    
+        if (success) {
+            res.setBody("{\"message\": \"Villa berhasil dihapus.\"}");
+            res.send(200);
+        } else {
+            res.setBody("{\"error\": \"Villa tidak ditemukan atau gagal dihapus.\"}");
+            res.send(404);
+        }
+    }
 
 }

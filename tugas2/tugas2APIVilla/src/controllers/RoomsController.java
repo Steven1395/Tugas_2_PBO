@@ -73,5 +73,56 @@ public class RoomsController {
         }
     }
 
+    public static void update(int villaId, int roomId, Request req, Response res) {
+        try {
+            Map<String, Object> body = req.getJSON();
+            if (body == null) {
+                res.setBody("{\"error\": \"Request body tidak valid.\"}");
+                res.send(400);
+                return;
+            }
+    
+            Room room = new Room();
+            room.setVilla(villaId); // dari path
+            room.setName((String) body.get("name"));
+            room.setQuantity((Integer) body.get("quantity"));
+            room.setCapacity((Integer) body.get("capacity"));
+            room.setPrice((Integer) body.get("price"));
+            room.setBedSize((String) body.get("bed_size"));
+            room.setHasDesk((Boolean) body.get("has_desk"));
+            room.setHasAc((Boolean) body.get("has_ac"));
+            room.setHasTv((Boolean) body.get("has_tv"));
+            room.setHasWifi((Boolean) body.get("has_wifi"));
+            room.setHasShower((Boolean) body.get("has_shower"));
+            room.setHasHotwater((Boolean) body.get("has_hotwater"));
+            room.setHasFridge((Boolean) body.get("has_fridge"));
+    
+            boolean success = repo.updateRoom(roomId, room);
+            if (success) {
+                res.setBody("{\"message\": \"Kamar berhasil diperbarui.\"}");
+                res.send(200);
+            } else {
+                res.setBody("{\"error\": \"Kamar tidak ditemukan.\"}");
+                res.send(404);
+            }
+    
+        } catch (Exception e) {
+            e.printStackTrace();
+            res.setBody("{\"error\": \"Gagal memperbarui kamar.\"}");
+            res.send(500);
+        }
+    }   
+    
+    public static void delete(int villaId, int roomId, Response res) {
+        boolean success = repo.deleteRoom(roomId);
+    
+        if (success) {
+            res.setBody("{\"message\": \"Kamar berhasil dihapus.\"}");
+            res.send(200);
+        } else {
+            res.setBody("{\"error\": \"Kamar tidak ditemukan atau gagal dihapus.\"}");
+            res.send(404);
+        }
+    }    
 
 }

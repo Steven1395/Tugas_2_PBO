@@ -30,4 +30,28 @@ public class ReviewsController {
             res.send(500);
         }
     }
+
+    public class ReviewController {
+        private static final ReviewRepository repo = new ReviewRepository();
+    
+        public static void getByCustomerId(int customerId, Response res) {
+            List<Review> reviews = repo.getReviewsByCustomerId(customerId);
+    
+            if (reviews.isEmpty()) {
+                res.setBody("{\"error\": \"Customer belum memberikan review.\"}");
+                res.send(404);
+                return;
+            }
+    
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                String json = mapper.writeValueAsString(reviews);
+                res.setBody(json);
+                res.send(200);
+            } catch (Exception e) {
+                res.setBody("{\"error\": \"Gagal mengambil data review.\"}");
+                res.send(500);
+            }
+        }
+    }
 }

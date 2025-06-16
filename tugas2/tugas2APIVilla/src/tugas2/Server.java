@@ -5,6 +5,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import controllers.*;
+import controllers.BookingsController.BookingController;
+import controllers.ReviewsController.ReviewController;
 
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -100,10 +102,78 @@ public class Server {
             return;
         }
 
+        // update villa
+        if (req.getMethod().equals("PUT") && req.getPath().matches("^/villas/\\d+$")) {
+            int id = Integer.parseInt(req.getPath().split("/")[2]);
+            VillaController.update(id, req, res);
+            return;
+        }
+        
+        // uodate kamar
+        if (req.getMethod().equals("PUT") && req.getPath().matches("^/villas/\\d+/rooms/\\d+$")) {
+            String[] parts = req.getPath().split("/");
+            int villaId = Integer.parseInt(parts[2]);
+            int roomId = Integer.parseInt(parts[4]);
+            RoomsController.update(villaId, roomId, req, res);
+            return;
+        }
 
+        // delete kamar
+        if (req.getMethod().equals("DELETE") && req.getPath().matches("^/villas/\\d+/rooms/\\d+$")) {
+            String[] parts = req.getPath().split("/");
+            int villaId = Integer.parseInt(parts[2]);
+            int roomId = Integer.parseInt(parts[4]);
+            RoomsController.delete(villaId, roomId, res);
+            return;
+        }
 
-
+        // delete villa
+        if (req.getMethod().equals("DELETE") && req.getPath().matches("^/villas/\\d+$")) {
+            int id = Integer.parseInt(req.getPath().split("/")[2]);
+            VillaController.delete(req, res, id);
+            return;
+        }
+        
+        
         // SEMUA ENDPOINT CUSTOMER
+
+        //get all cust
+        if (req.getMethod().equals("GET") && req.getPath().equals("/customers")) {
+            CustomerController.getAll(req, res);
+            return;
+        }
+
+        //get cust by id
+        if (req.getMethod().equals("GET") && req.getPath().matches("^/customers/\\d+$")) {
+            int id = Integer.parseInt(req.getPath().split("/")[2]);
+            CustomerController.getById(id, res);
+            return;
+        }
+
+        //get cust by booking
+        if (req.getMethod().equals("GET") && req.getPath().matches("^/customers/\\d+/bookings$")) {
+            int customerId = Integer.parseInt(req.getPath().split("/")[2]);
+            BookingController.getByCustomerId(customerId, res);
+            return;
+        }
+
+        //get by reviews
+        if (req.getMethod().equals("GET") && req.getPath().matches("^/customers/\\d+/reviews$")) {
+            int customerId = Integer.parseInt(req.getPath().split("/")[2]);
+            ReviewController.getByCustomerId(customerId, res);
+            return;
+        }
+
+        //post cust
+        if (req.getMethod().equals("POST") && req.getPath().equals("/customers")) {
+            CustomerController.create(req, res);
+            return;
+        }
+        
+
+
+        
+        
 
 
 

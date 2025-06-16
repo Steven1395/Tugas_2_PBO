@@ -30,4 +30,28 @@ public class BookingsController {
             res.send(500);
         }
     }
+
+    public class BookingController {
+        private static final BookingRepository repo = new BookingRepository();
+    
+        public static void getByCustomerId(int customerId, Response res) {
+            List<Booking> bookings = repo.getBookingsByCustomerId(customerId);
+    
+            if (bookings.isEmpty()) {
+                res.setBody("{\"error\": \"Customer belum memiliki booking.\"}");
+                res.send(404);
+                return;
+            }
+    
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                String json = mapper.writeValueAsString(bookings);
+                res.setBody(json);
+                res.send(200);
+            } catch (Exception e) {
+                res.setBody("{\"error\": \"Gagal membaca data booking.\"}");
+                res.send(500);
+            }
+        }
+    }
 }

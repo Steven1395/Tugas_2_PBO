@@ -23,5 +23,12 @@ public class VillaService {
     return villaRepo.insertVilla(villa);
     }
 
-
+    public boolean updateVilla(int id, Villa villa) {
+        return villaRepo.updateVilla(id, villa);
+    }
+    
+    public boolean deleteVilla(int id) {
+        return villaRepo.deleteVilla(id);
+    }
+    
 }

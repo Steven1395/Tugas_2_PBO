@@ -70,4 +70,47 @@ public class RoomRepository {
         }
     }
 
+    public boolean updateRoom(int roomId, Room room) {
+        String sql = "UPDATE room_types SET name = ?, quantity = ?, capacity = ?, price = ?, bed_size = ?, has_desk = ?, has_ac = ?, has_tv = ?, has_wifi = ?, has_shower = ?, has_hotwater = ?, has_fridge = ? WHERE id = ?";
+    
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setString(1, room.getName());
+            stmt.setInt(2, room.getQuantity());
+            stmt.setInt(3, room.getCapacity());
+            stmt.setInt(4, room.getPrice());
+            stmt.setString(5, room.getBedSize());
+            stmt.setBoolean(6, room.isHasDesk());
+            stmt.setBoolean(7, room.isHasAc());
+            stmt.setBoolean(8, room.isHasTv());
+            stmt.setBoolean(9, room.isHasWifi());
+            stmt.setBoolean(10, room.isHasShower());
+            stmt.setBoolean(11, room.isHasHotwater());
+            stmt.setBoolean(12, room.isHasFridge());
+            stmt.setInt(13, roomId);
+    
+            return stmt.executeUpdate() > 0;
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }    
+
+    public boolean deleteRoom(int roomId) {
+        String sql = "DELETE FROM room_types WHERE id = ?";
+    
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setInt(1, roomId);
+            return stmt.executeUpdate() > 0;
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }    
+
 }

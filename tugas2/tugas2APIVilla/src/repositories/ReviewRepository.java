@@ -37,4 +37,35 @@ public class ReviewRepository {
 
         return reviews;
     }
+
+    public List<Review> getReviewsByCustomerId(int customerId) {
+        List<Review> reviews = new ArrayList<>();
+        String sql = """
+            SELECT r.booking, r.star, r.title, r.content
+            FROM reviews r
+            JOIN bookings b ON r.booking = b.id
+            WHERE b.customer = ?
+        """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Review review = new Review();
+                review.setBooking(rs.getInt("booking"));
+                review.setStar(rs.getInt("star"));
+                review.setTitle(rs.getString("title"));
+                review.setContent(rs.getString("content"));
+                reviews.add(review);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reviews;
+    }
 }
