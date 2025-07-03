@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/b9cf3244-1a91-4309-a8c9-8b56c57ab603)# Tugas_2_PBO
+    ![image](https://github.com/user-attachments/assets/b9cf3244-1a91-4309-a8c9-8b56c57ab603)# Tugas_2_PBO
 
 ## Nama Kelompok :
 - Steven Satyam Wijanarko (2405551036)
@@ -215,6 +215,8 @@
 
 
 #### PUT
+
+##### PUT Update Vouchers
 ![image alt](https://github.com/user-attachments/assets/bc633345-f657-4653-851a-83077edfea91)
 .
 ![image alt](https://github.com/user-attachments/assets/427251e0-e0a6-4a5c-a04d-93796fcdffdb)
@@ -225,6 +227,8 @@
 
 
 #### DELETE
+
+##### DELETE Menghapus Voucher
 ![image alt](https://github.com/user-attachments/assets/d1c2ecbd-7bf9-4c99-9902-3c222b803152)
 .
 ![image alt](https://github.com/user-attachments/assets/2e12ab7a-2dd2-4748-8105-71c2fb5f2c76)
