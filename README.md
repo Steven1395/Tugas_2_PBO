@@ -1,4 +1,4 @@
-# Tugas_2_PBO
+![image](https://github.com/user-attachments/assets/b9cf3244-1a91-4309-a8c9-8b56c57ab603)# Tugas_2_PBO
 
 ## Nama Kelompok :
 - Steven Satyam Wijanarko (2405551036)
@@ -148,9 +148,35 @@
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/SS.png)
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/Headers.jpg)
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/Bukti%20DB.png)
+.
+##### POST Data Bookings Customer Baru
+![image alt](https://github.com/user-attachments/assets/7e8326e9-fe11-43d8-97d6-9f7e26d97be9)
+.
+![image alt](https://github.com/user-attachments/assets/e101b632-52c5-4b3d-8211-599dbd053ed8)
+.
+![image alt](https://github.com/user-attachments/assets/32d62dc6-b13b-4fea-86fb-0bd8651edae3)
+.
+![image alt](https://github.com/user-attachments/assets/378d91f0-12dd-4ac5-9d1d-98479e5bd1cb)
+
+##### POST Data Review Customers
+![image alt](https://github.com/user-attachments/assets/d8db0127-a8fb-4588-9db5-280a362da821)
+.
+![image alt](https://github.com/user-attachments/assets/f06fcc44-46f7-425e-911f-242d663827f2)
+.
+![image alt](https://github.com/user-attachments/assets/9518bc1c-298c-4c35-ace4-99f0d3736c45)
+.
+![image alt](https://github.com/user-attachments/assets/17e23fa7-4c0b-448e-928f-c5f78528f4b2)
 
 #### PUT
 
+##### PUT Mengubah Data Customer
+![image alt](https://github.com/user-attachments/assets/7c5776c3-64c3-4fb8-8ec2-e3131cd7fc7a)
+.
+![image alt](https://github.com/user-attachments/assets/0984c0c1-3ea3-48b4-a525-e07b94dbf61c)
+.
+![image alt](https://github.com/user-attachments/assets/7c29c2e5-f7b1-468b-8643-8acf962a819f)
+.
+![image alt](https://github.com/user-attachments/assets/1f7aa074-8f3e-4a38-9160-09b326f627df)
 
 #### DELETE
 
@@ -160,12 +186,50 @@
 
 #### GET
 
+##### GET Semua Data Vouchers
+![image alt](https://github.com/user-attachments/assets/9e27dcc9-9fbe-4f13-8155-e11f6f1f552f)
+.
+![image alt](https://github.com/user-attachments/assets/a30589e5-7b39-4618-b08b-7766f3428a07)
+.
+![image alt](https://github.com/user-attachments/assets/31e46d65-19d3-406b-bb89-0c59c55c126c)
+.
+![image alt](https://github.com/user-attachments/assets/aa3d77b2-6d13-42c2-815f-28245ae9a7ef)
+
+
+##### GET Vouchers by ID
+![image](https://github.com/user-attachments/assets/593a0822-3aac-4e1a-8983-2560024b84ad)
+.
+![image](https://github.com/user-attachments/assets/46210fa1-a0e5-4ee2-a981-557c34d4c438)
+.
+
 #### POST
+
+##### POST Membuat Voucher Baru
+![image alt](https://github.com/user-attachments/assets/f1c08ab0-3563-4fc6-8531-5cb8487f0b41)
+.
+![image alt](https://github.com/user-attachments/assets/daf68476-e974-41ae-a930-f9385b72ea3f)
+.
+![image alt](https://github.com/user-attachments/assets/2d7fc11c-794b-47dc-a110-bd7adc22cd92)
+.
+![image alt](https://github.com/user-attachments/assets/c5a14807-fbb5-406f-ae92-fac857150fef)
 
 
 #### PUT
+![image alt](https://github.com/user-attachments/assets/bc633345-f657-4653-851a-83077edfea91)
+.
+![image alt](https://github.com/user-attachments/assets/427251e0-e0a6-4a5c-a04d-93796fcdffdb)
+.
+![image alt](https://github.com/user-attachments/assets/909b6c36-bcd6-437a-92ab-3386d65473b9)
+.
+![image alt](https://github.com/user-attachments/assets/95795526-b385-4bb7-bcb6-462dbac17120)
 
 
 #### DELETE
+![image alt](https://github.com/user-attachments/assets/d1c2ecbd-7bf9-4c99-9902-3c222b803152)
+.
+![image alt](https://github.com/user-attachments/assets/2e12ab7a-2dd2-4748-8105-71c2fb5f2c76)
+.
+![image alt](https://github.com/user-attachments/assets/5115b2b4-ceec-471a-a01d-9ba21e68883d)
+
 
 
