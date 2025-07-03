@@ -5,8 +5,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import controllers.*;
-import controllers.BookingsController.BookingController;
 import controllers.ReviewsController.ReviewController;
+import controllers.VouchersController;
 
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -30,177 +30,182 @@ public class Server {
     }
 
     public static void processHttpExchange(HttpExchange httpExchange) {
+
+        URI uri = httpExchange.getRequestURI();
+        String rawPath = uri.getPath();
+        String rawMethod = httpExchange.getRequestMethod();
+
         Request req = new Request(httpExchange);
         Response res = new Response(httpExchange);
 
-        URI uri = httpExchange.getRequestURI();
-        String path = uri.getPath();
-        String method = httpExchange.getRequestMethod();
-        System.out.printf("path: %s\n", path);
-        
+        String normalizedPath = req.getPath();
+        String normalizedMethod = req.getMethod();
 
-        // SEMUA ENDPOINT VILLA
+        // Debug jalur
+        System.out.printf("RAW: %s | %s\n", rawPath, rawMethod);
+        System.out.printf("NORM: %s | %s\n", normalizedPath, normalizedMethod);
 
-        // get semua villa
-        if (req.getPath().equals("/villas") && req.getMethod().equals("GET")) {
+        //get
+        if (rawMethod.equals("GET") && rawPath.equals("/villas")) {
             VillaController.getAll(req, res);
             return;
         }
 
-        //get berdasar idnya
-        if (req.getMethod().equals("GET") && req.getPath().matches("^/villas/\\d+$")) {
-            int id = Integer.parseInt(req.getPath().substring("/villas/".length()));
+        if (rawMethod.equals("GET") && rawPath.matches("^/villas/\\d+$")) {
+            int id = Integer.parseInt(rawPath.split("/")[2]);
             VillaController.getById(req, res, id);
             return;
         }
 
-        
-        // GET /villa/{id}/rooms
-        if (req.getMethod().equals("GET") && req.getPath().matches("^/villas/\\d+/rooms$")) {
-            int villaId = Integer.parseInt(req.getPath().split("/")[2]);
+        if (rawMethod.equals("GET") && rawPath.matches("^/villas/\\d+/rooms$")) {
+            int villaId = Integer.parseInt(rawPath.split("/")[2]);
             RoomsController.getByVillaId(villaId, res);
             return;
         }
 
-
-        // get villa/bookings
-        if (req.getMethod().equals("GET") && req.getPath().matches("^/villas/\\d+/bookings$")) {
-            int villaId = Integer.parseInt(req.getPath().split("/")[2]);
+        if (rawMethod.equals("GET") && rawPath.matches("^/villas/\\d+/bookings$")) {
+            int villaId = Integer.parseInt(rawPath.split("/")[2]);
             BookingsController.getByVillaId(villaId, res);
             return;
         }
 
-
-        //get reviews
-        if (req.getMethod().equals("GET") && req.getPath().matches("^/villas/\\d+/reviews$")) {
-            int villaId = Integer.parseInt(req.getPath().split("/")[2]);
+        if (rawMethod.equals("GET") && rawPath.matches("^/villas/\\d+/reviews$")) {
+            int villaId = Integer.parseInt(rawPath.split("/")[2]);
             ReviewsController.getByVillaId(villaId, res);
             return;
         }
 
-    
-        //get by date
-        if (req.getMethod().equals("GET") && req.getPath().equals("/villas") &&
-            req.getQueryParam("ci_date") != null && req.getQueryParam("co_date") != null) {
-
+        if (rawMethod.equals("GET") && rawPath.equals("/villas")
+                && req.getQueryParam("ci_date") != null && req.getQueryParam("co_date") != null) {
             VillaController.searchByDate(req, res);
             return;
         }
 
-
-        //post insert villa
-        if (req.getMethod().equals("POST") && req.getPath().equals("/villas")) {
+        if (rawMethod.equals("POST") && rawPath.equals("/villas")) {
             VillaController.create(req, res);
             return;
         }
 
-
-        //post insert rooms villa
-        if (req.getMethod().equals("POST") && req.getPath().matches("^/villas/\\d+/rooms$")) {
-            int villaId = Integer.parseInt(req.getPath().split("/")[2]);
+        if (rawMethod.equals("POST") && rawPath.matches("^/villas/\\d+/rooms$")) {
+            int villaId = Integer.parseInt(rawPath.split("/")[2]);
             RoomsController.addToVilla(villaId, req, res);
             return;
         }
 
-        // update villa
-        if (req.getMethod().equals("PUT") && req.getPath().matches("^/villas/\\d+$")) {
-            int id = Integer.parseInt(req.getPath().split("/")[2]);
+        if (rawMethod.equals("PUT") && rawPath.matches("^/villas/\\d+$")) {
+            int id = Integer.parseInt(rawPath.split("/")[2]);
             VillaController.update(id, req, res);
             return;
         }
-        
-        // uodate kamar
-        if (req.getMethod().equals("PUT") && req.getPath().matches("^/villas/\\d+/rooms/\\d+$")) {
-            String[] parts = req.getPath().split("/");
+
+        if (rawMethod.equals("PUT") && rawPath.matches("^/villas/\\d+/rooms/\\d+$")) {
+            String[] parts = rawPath.split("/");
             int villaId = Integer.parseInt(parts[2]);
             int roomId = Integer.parseInt(parts[4]);
             RoomsController.update(villaId, roomId, req, res);
             return;
         }
 
-        // delete kamar
-        if (req.getMethod().equals("DELETE") && req.getPath().matches("^/villas/\\d+/rooms/\\d+$")) {
-            String[] parts = req.getPath().split("/");
+        if (rawMethod.equals("DELETE") && rawPath.matches("^/villas/\\d+/rooms/\\d+$")) {
+            String[] parts = rawPath.split("/");
             int villaId = Integer.parseInt(parts[2]);
             int roomId = Integer.parseInt(parts[4]);
             RoomsController.delete(villaId, roomId, res);
             return;
         }
 
-        // delete villa
-        if (req.getMethod().equals("DELETE") && req.getPath().matches("^/villas/\\d+$")) {
-            int id = Integer.parseInt(req.getPath().split("/")[2]);
+        if (rawMethod.equals("DELETE") && rawPath.matches("^/villas/\\d+$")) {
+            int id = Integer.parseInt(rawPath.split("/")[2]);
             VillaController.delete(req, res, id);
             return;
         }
-        
-        
-        // SEMUA ENDPOINT CUSTOMER
 
-        //get all cust
-        if (req.getMethod().equals("GET") && req.getPath().equals("/customers")) {
+        // =============================
+        // CUSTOMER ENDPOINT (pakai raw)
+        // =============================
+
+        if (rawMethod.equals("GET") && rawPath.equals("/customers")) {
             CustomerController.getAll(req, res);
             return;
         }
 
-        //get cust by id
-        if (req.getMethod().equals("GET") && req.getPath().matches("^/customers/\\d+$")) {
-            int id = Integer.parseInt(req.getPath().split("/")[2]);
+        if (rawMethod.equals("GET") && rawPath.matches("^/customers/\\d+$")) {
+            int id = Integer.parseInt(rawPath.split("/")[2]);
             CustomerController.getById(id, res);
             return;
         }
 
-        //get cust by booking
-        if (req.getMethod().equals("GET") && req.getPath().matches("^/customers/\\d+/bookings$")) {
-            int customerId = Integer.parseInt(req.getPath().split("/")[2]);
-            BookingController.getByCustomerId(customerId, res);
+        if (rawMethod.equals("GET") && rawPath.matches("^/customers/\\d+/bookings$")) {
+            int customerId = Integer.parseInt(rawPath.split("/")[2]);
+            BookingsController.getByCustomerId(customerId, res);
             return;
         }
 
-        //get by reviews
-        if (req.getMethod().equals("GET") && req.getPath().matches("^/customers/\\d+/reviews$")) {
-            int customerId = Integer.parseInt(req.getPath().split("/")[2]);
+        if (rawMethod.equals("GET") && rawPath.matches("^/customers/\\d+/reviews$")) {
+            int customerId = Integer.parseInt(rawPath.split("/")[2]);
             ReviewController.getByCustomerId(customerId, res);
             return;
         }
 
-        //post cust
-        if (req.getMethod().equals("POST") && req.getPath().equals("/customers")) {
+        if (rawMethod.equals("POST") && rawPath.equals("/customers")) {
             CustomerController.create(req, res);
             return;
         }
-        
 
-
-        
-        
-
-
-
-
-
-
-
-        // SEMUA ENDPOINT VOUCHER
-
-
-
-
-
-
-
-
-        // Handle request dan autentikasi dalam block try-catch dibawah. Tapi apa semua harus diletakkan disini?
-        try {
-            Map<String, Object> reqJsonMap = req.getJSON();
-            System.out.println("first_name => " + reqJsonMap.get("first_name"));
-            System.out.println("email => " + reqJsonMap.get("email"));
-            System.out.println("Done!");
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
+        if (rawMethod.equals("POST") && rawPath.matches("^/customers/\\d+/bookings$")) {
+            int customerId = Integer.parseInt(rawPath.split("/")[2]);
+            BookingsController.createBooking(req, res);
+            return;
         }
 
-        // Handle response disini jika tidak ada yg menghandle
+        if (rawMethod.equals("POST") && rawPath.matches("^/customers/\\d+/bookings/\\d+/reviews$")) {
+            String[] segments = rawPath.split("/");
+            int customerId = Integer.parseInt(segments[2]);
+            int bookingId = Integer.parseInt(segments[4]);
+            ReviewsController.create(customerId, bookingId, req, res);
+            return;
+        }
+
+        if (rawMethod.equals("PUT") && rawPath.matches("^/customers/\\d+$")) {
+            int customerId = Integer.parseInt(rawPath.split("/")[2]);
+            CustomerController.update(customerId, req, res);
+            return;
+        }
+
+        // =============================
+        // VOUCHER ENDPOINT (pakai normalized)
+        // =============================
+
+        if (normalizedMethod.equals("GET") && normalizedPath.equals("/vouchers")) {
+            VouchersController.getAll(res);
+            return;
+        }
+
+        if (normalizedMethod.equals("GET") && normalizedPath.matches("^/vouchers/\\d+$")) {
+            int id = Integer.parseInt(normalizedPath.split("/")[2]);
+            VouchersController.getById(id, res);
+            return;
+        }
+
+        if (normalizedMethod.equals("POST") && normalizedPath.equals("/vouchers")) {
+            VouchersController.create(req, res);
+            return;
+        }
+
+        if (normalizedMethod.equals("PUT") && normalizedPath.matches("^/vouchers/\\d+$")) {
+            int id = Integer.parseInt(normalizedPath.split("/")[2]);
+            VouchersController.update(id, req, res);
+            return;
+        }
+
+        if (normalizedMethod.equals("DELETE") && normalizedPath.matches("^/vouchers/\\d+/?$")) {
+            int id = Integer.parseInt(normalizedPath.split("/")[2]);
+            VouchersController.delete(id, res);
+            return;
+        }
+
+    
+
         if (!res.isSent()) {
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> resJsonMap = new HashMap<>();
@@ -209,15 +214,12 @@ public class Server {
             String resJson = "";
             try {
                 resJson = objectMapper.writeValueAsString(resJsonMap);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
             res.setBody(resJson);
             res.send(HttpURLConnection.HTTP_OK);
-            return;
         }
-
-
 
         httpExchange.close();
     }

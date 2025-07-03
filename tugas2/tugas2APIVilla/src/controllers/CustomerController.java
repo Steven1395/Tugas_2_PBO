@@ -78,4 +78,31 @@ public class CustomerController {
             res.send(500);
         }
     }
+
+    public static void update(int customerId, Request req, Response res) {
+        try {
+            Map<String, Object> body = req.getJSON();
+
+            String name = (String) body.get("name");
+            String email = (String) body.get("email");
+            String phone = (String) body.get("phone");
+
+            Customer customer = new Customer(customerId, name, email, phone);
+
+            boolean success = repo.updateCustomer(customer);
+
+            if (success) {
+                res.setBody("{\"message\": \"Customer berhasil diperbarui.\"}");
+                res.send(200);
+            } else {
+                res.setBody("{\"error\": \"Gagal memperbarui customer.\"}");
+                res.send(500);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            res.setBody("{\"error\": \"Server error.\"}");
+            res.send(500);
+        }
+    }
 }

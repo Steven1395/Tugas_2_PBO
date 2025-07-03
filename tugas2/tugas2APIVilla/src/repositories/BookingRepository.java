@@ -11,10 +11,10 @@ public class BookingRepository {
         List<Booking> bookings = new ArrayList<>();
 
         String query = """
-            SELECT b.* FROM bookings b
-            JOIN room_types r ON b.room_type = r.id
-            WHERE r.villa = ?
-        """;
+                    SELECT b.* FROM bookings b
+                    JOIN room_types r ON b.room_type = r.id
+                    WHERE r.villa = ?
+                """;
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -77,5 +77,33 @@ public class BookingRepository {
         }
 
         return bookings;
+    }
+
+    public boolean createBooking(Booking booking) {
+        String sql = """
+                    INSERT INTO bookings (customer, room_type, checkin_date, checkout_date, price, voucher, final_price, payment_status, has_checkedin, has_checkedout)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, booking.getCustomer());
+            stmt.setInt(2, booking.getRoomType());
+            stmt.setString(3, booking.getCheckinDate());
+            stmt.setString(4, booking.getCheckoutDate());
+            stmt.setInt(5, booking.getPrice());
+            stmt.setString(6, booking.getVoucher());
+            stmt.setInt(7, booking.getFinalPrice());
+            stmt.setString(8, booking.getPaymentStatus());
+            stmt.setBoolean(9, booking.isHasCheckedin());
+            stmt.setBoolean(10, booking.isHasCheckedout());
+
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

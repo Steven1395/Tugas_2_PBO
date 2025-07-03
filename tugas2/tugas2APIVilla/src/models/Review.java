@@ -8,6 +8,13 @@ public class Review {
 
     public Review() {}
 
+    public Review(int booking, int star, String title, String content) {
+        this.booking = booking;
+        this.star = star;
+        this.title = title;
+        this.content = content;
+    }
+
     public int getBooking() { return booking; }
     public void setBooking(int booking) { this.booking = booking; }
 

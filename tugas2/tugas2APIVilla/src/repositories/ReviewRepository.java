@@ -4,6 +4,7 @@ import models.Review;
 import java.sql.*;
 import java.util.*;
 
+
 public class ReviewRepository {
     private final String DB_URL = "jdbc:sqlite:resources/villa.db";
 
@@ -67,5 +68,21 @@ public class ReviewRepository {
         }
 
         return reviews;
+    }
+
+    public boolean saveReview(Review review) {
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            String sql = "INSERT INTO reviews (booking, star, title, content) VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, review.getBooking());
+            stmt.setInt(2, review.getStar());
+            stmt.setString(3, review.getTitle());
+            stmt.setString(4, review.getContent());
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

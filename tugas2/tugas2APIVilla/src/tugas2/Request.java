@@ -62,7 +62,9 @@ public class Request {
     }
 
     public String getContentType() {
-        return headers.getFirst("Content-Type");
+        return headers.getFirst("Content-Type") != null
+                ? headers.getFirst("Content-Type")
+                : "";
     }
 
     public Map<String, Object> getJSON() throws JsonProcessingException {
@@ -79,9 +81,14 @@ public class Request {
         return jsonMap;
     }
 
-        public String getPath() {
-        return httpExchange.getRequestURI().getPath();
+    public String getPath() {
+        String path = httpExchange.getRequestURI().getPath().trim();
+        if (path.endsWith("/") && path.length() > 1) {
+            path = path.substring(0, path.length() - 1);
+        }
+        return path;
     }
+
 
     public String getMethod() {
         return httpExchange.getRequestMethod();
