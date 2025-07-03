@@ -5,6 +5,20 @@
 - I Gede Pradiva Yoga Krisnanda (2405551099)
 - Marcell Christian Santoso (2405551153)
 
+
+## DAFTAR ISI
+[Cara Menjalankan Kode Program](#Cara-Menjalankan-Kode-Program)
+    [Clone Repo Github](#Clone-Repository-Github)
+    [Masuk ke Dalam Terminal](#Masuk-ke-Dalam-Terminal-(Misalnya-Dalam-Contoh-Ini-Menggunakan-Terminal-VSCode)-:)
+    [Postman](#Postman)
+    
+[Screnshot Postman](#Screenshot-Postman)
+    [Villa](#Villa)
+    [Customer](#Customer)
+    [Voucher](#Voucher)
+
+==========================================================================================================================================
+
 ## Cara Menjalankan Kode Program
 Sebuah REST API sederhana untuk sistem villa, dibangun dengan Java native dan dengan database menggunakan SQLite. API ini menyediakan fitur CRUD (Create, Read, Update, Delete) untuk villa, room, customer, booking, dan review. Berikut merupakan langkah-langkah dalam menjalankan program API ini.
 
@@ -41,6 +55,7 @@ Request dapat berupa GET (Read atau membaca data), POST (Create atau menambahkan
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/8bd5a19d37886b956a18d1b9ef76ff25012737ab/SS%20Tugas%202/SS%20menjelaskan%20alur%20kode%20program/Contoh%20endpoint.png)
 Endpoint di atas digunakan untuk menampilkan semua data villa dalam format JSON. Untuk endpoint lain seperti POST atau PUT, pastikan menggunakan header Content-Type: application/json dan isi body JSON sesuai struktur data.
 
+==========================================================================================================================================
 
 ## Screenshot Postman
   Untuk memastikan bahwa setiap endpoint dapat berfungsi dengan semestinya, kami melakukan pengujian secara menyeluruh menggunakan Postman, sebuah aplikasi yang sering dimanfaatkan oleh pengembang untuk mengirim request HTTP dan mengevaluasi tanggapan dari server. Melalui penggunaan Postman ini, kami dapat melakukan simulasi berbagai jenis permintaan seperti GET, POST, PUT, dan DELETE terhadap endpoint yang telah dibuat. Selain itu, kami juga memverifikasi apakah data yang dikembalikan oleh server telah sesuai dengan format JSON yang diharapkan serta memeriksa apakah kode status HTTP yang diterima sesuai dengan hasil dari proses yang terjadi pada server.
@@ -98,6 +113,7 @@ Endpoint di atas digunakan untuk menampilkan semua data villa dalam format JSON.
 ##### GET Villa Berdasarkan Ketersediaan Room
 
 
+==========================================================================================================================================
 
 #### POST
 
@@ -118,6 +134,8 @@ Endpoint di atas digunakan untuk menampilkan semua data villa dalam format JSON.
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/SS.png).
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/Bukti%20db.png).
+
+==========================================================================================================================================
 
 #### PUT
 ##### PUT Update Kamar Villa
@@ -148,6 +166,7 @@ Gambar di atas menunjukkan hasil response dari server setelah request dikirim. R
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20villa/Bukti%20db.png)
 Gambar di atas menunjukkan tampilan isi tabel villas di database SQLite setelah update berhasil dilakukan. Baris dengan id = 11 berhasil ditambahkan, artinya data villa tersebut sukses dimasukkan ke database. Sehingga hal ini membuktikan bahwa integrasi antara endpoint, controller, repository, dan database berjalan dengan sukses.
 
+==========================================================================================================================================
 
 #### DELETE
 
@@ -174,7 +193,7 @@ Setelah permintaan DELETE dikirim, server merespons dengan status code 200 OK, y
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20villa/Bukti%20db.png)
 Gambar di atas menunjukkan tampilan isi tabel villas di database SQLite setelah penghapusan berhasil dilakukan. Baris dengan id = 11 sudah tidak ada, artinya villa tersebut benar-benar telah dihapus dari database. Ini membuktikan bahwa integrasi antara endpoint, controller, repository, dan database berjalan dengan sukses
 
-
+==========================================================================================================================================
 
 ### Customer
   Customer atau pelanggan merupakan entitas penting yang merepresentasikan pengguna akhir dari sistem, yaitu orang yang melakukan pemesanan villa. Data customer disimpan dalam tabel customers di database, dan mencakup informasi pribadi seperti nama, alamat email, dan nomor telepon.
@@ -211,6 +230,7 @@ Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20review/SS.png)
 Gambar di atas menampilkan hasil respons dari server setelah permintaan GET dikirim. Data ditampilkan dalam format JSON yang berisi informasi yang diminta dari database. Jika permintaan berhasil diproses, server akan mengembalikan status HTTP 200 OK disertai dengan konten data yang sesuai, berupa JSON. Sesuai dengan gambar di atas, ditampilkan data review yang telah dilakukan oleh customer dengan ID = 1.
 
+==========================================================================================================================================
 
 #### POST
 ##### POST Data Customer Baru
@@ -245,6 +265,8 @@ Gambar di atas menunjukkan isi tabel customers dalam database setelah data ditam
 .
 ![image alt](https://github.com/user-attachments/assets/17e23fa7-4c0b-448e-928f-c5f78528f4b2)
 
+==========================================================================================================================================
+
 #### PUT
 
 ##### PUT Mengubah Data Customer
@@ -256,8 +278,12 @@ Gambar di atas menunjukkan isi tabel customers dalam database setelah data ditam
 .
 ![image alt](https://github.com/user-attachments/assets/1f7aa074-8f3e-4a38-9160-09b326f627df)
 
+==========================================================================================================================================
+
 #### DELETE
 
+
+==========================================================================================================================================
 
 ### Voucher
   Voucher merupakan entitas yang berfungsi sebagai media pemberian potongan harga atau diskon kepada pelanggan saat melakukan pemesanan. Data voucher disimpan dalam tabel vouchers di database dan berisi informasi penting seperti kode voucher, deskripsi, nilai diskon (dalam bentuk persentase atau nominal), serta tanggal mulai dan berakhirnya masa berlaku voucher.
@@ -280,6 +306,8 @@ Gambar di atas menunjukkan isi tabel customers dalam database setelah data ditam
 ![image](https://github.com/user-attachments/assets/46210fa1-a0e5-4ee2-a981-557c34d4c438)
 .
 
+==========================================================================================================================================
+
 #### POST
 
 ##### POST Membuat Voucher Baru
@@ -291,6 +319,7 @@ Gambar di atas menunjukkan isi tabel customers dalam database setelah data ditam
 .
 ![image alt](https://github.com/user-attachments/assets/c5a14807-fbb5-406f-ae92-fac857150fef)
 
+==========================================================================================================================================
 
 #### PUT
 
@@ -303,6 +332,7 @@ Gambar di atas menunjukkan isi tabel customers dalam database setelah data ditam
 .
 ![image alt](https://github.com/user-attachments/assets/95795526-b385-4bb7-bcb6-462dbac17120)
 
+==========================================================================================================================================
 
 #### DELETE
 
@@ -313,5 +343,6 @@ Gambar di atas menunjukkan isi tabel customers dalam database setelah data ditam
 .
 ![image alt](https://github.com/user-attachments/assets/5115b2b4-ceec-471a-a01d-9ba21e68883d)
 
+==========================================================================================================================================
 
 
