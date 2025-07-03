@@ -6,11 +6,46 @@
 - Marcell Christian Santoso (2405551153)
 
 ## Cara Menjalankan Kode Program
+Sebuah REST API sederhana untuk sistem villa, dibangun dengan Java native dan dengan database menggunakan SQLite. API ini menyediakan fitur CRUD (Create, Read, Update, Delete) untuk villa, room, customer, booking, dan review. Berikut merupakan langkah-langkah dalam menjalankan program API ini.
+
+### Clone Repository Github
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/8bd5a19d37886b956a18d1b9ef76ff25012737ab/SS%20Tugas%202/SS%20menjelaskan%20alur%20kode%20program/Git%20clone.png)
+Pertama terlebih dahulu dilakukan clone github repository seperti pada gambar di atas. Jika clone berhasil, buka folder menggunakan aplikasi seperti VSCode, Intellij atau IDE java lainnya.
+
+### Masuk ke Dalam Terminal (Misalnya Dalam Contoh Ini Menggunakan Terminal VSCode) :
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/8bd5a19d37886b956a18d1b9ef76ff25012737ab/SS%20Tugas%202/SS%20menjelaskan%20alur%20kode%20program/Compile.png)
+Berdasarkan gambar di atas hal yang harus dilakukan adalah:
+#### Masuk ke direktori utama program:
+cd tugas2/tugas2APIVilla
+-	pastikan sudah masuk ke dalam folder di atas. Jika belum masuk ke dalam folder dapat melakukan perintah di atas.
+
+#### Compile program java
+javac -d bin -cp "lib/*" src/tugas2/*.java src/controllers/*.java src/models/*.java src/services/*.java src/repositories/*.java src/Tugas2.java
+-	Perintah di atas akan meng-compile semua file dan memanggil semua package Java ke dalam folder bin/ serta menggunakan semua library di folder lib/.
+
+#### Jalankan program java
+java --% -Djava.net.preferIPv4Stack=true -cp "bin;lib/*" Tugas2
+-	Setelah di compile, program dapat dijalankan dengan menggunakan perintah di atas. Jika berhasil, akan muncul output seperti berikut:
+  
+Listening on port: 8080…
+-	Artinya server sudah berjalan dan siap menerima request dari Postman.
+
+### Postman
+Postman merupakan suatu platform yang digunakan oleh pengembang untuk membangun, menguji, dan mendokumentasikan API. Postman memungkinkan pengembang membuat permintaan HTTP, mengelola berbagai aspek API seperti header dan parameter, dan menguji request dan respons API. 
+
+#### Pilih Request
+Request dapat berupa GET (Read atau membaca data), POST (Create atau menambahkan data), PUT(Update atau memperbaharui data), DELETE(Delete atau menghapus data) sesuai dengan metode yang dibutuhkan pengguna, berikut merupakan daftar dari endpoint yang tersedia dalam API ini:
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/8bd5a19d37886b956a18d1b9ef76ff25012737ab/SS%20Tugas%202/SS%20menjelaskan%20alur%20kode%20program/Seluruh%20endpoint.png)
+
+#### Contoh Request Melalui Postman
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/8bd5a19d37886b956a18d1b9ef76ff25012737ab/SS%20Tugas%202/SS%20menjelaskan%20alur%20kode%20program/Contoh%20endpoint.png)
+Endpoint di atas digunakan untuk menampilkan semua data villa dalam format JSON. Untuk endpoint lain seperti POST atau PUT, pastikan menggunakan header Content-Type: application/json dan isi body JSON sesuai struktur data.
+
 
 ## Screenshot Postman
   Untuk memastikan bahwa setiap endpoint dapat berfungsi dengan semestinya, kami melakukan pengujian secara menyeluruh menggunakan Postman, sebuah aplikasi yang sering dimanfaatkan oleh pengembang untuk mengirim request HTTP dan mengevaluasi tanggapan dari server. Melalui penggunaan Postman ini, kami dapat melakukan simulasi berbagai jenis permintaan seperti GET, POST, PUT, dan DELETE terhadap endpoint yang telah dibuat. Selain itu, kami juga memverifikasi apakah data yang dikembalikan oleh server telah sesuai dengan format JSON yang diharapkan serta memeriksa apakah kode status HTTP yang diterima sesuai dengan hasil dari proses yang terjadi pada server.
   Note: Format untuk memasukkan gambar: ![image alt](Perma Link).
-
+  
 ### Villa
   Villa merupakan entitas utama yang menjadi pusat dari seluruh sistem. Setiap villa mewakili properti akomodasi yang dapat disewa oleh pelanggan, dan memiliki atribut penting seperti nama villa, deskripsi, serta alamat lokasi. Data villa disimpan dalam tabel villas di dalam database SQLite, dan menjadi titik awal untuk entitas lainnya.
 
@@ -88,32 +123,56 @@
 ##### PUT Update Kamar Villa
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20kamar%20villa/URL%20dan%20Body.png)
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20kamar%20villa/SS.png)
+Gambar di atas menunjukkan bagaimana endpoint dipanggil menggunakan Postman. Method yang digunakan adalah PUT dengan URL lengkap http://localhost:8080/villas/11/rooms/36. Di tab Body, dipilih raw JSON dan diisi dengan data kamar baru yang akan diperbarui yakni: id, name, quantity, capacity, dan price.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20kamar%20villa/Headers.png)
+Gambar di atas menunjukkan header yang digunakan dalam request PUT. Yang terpenting adalah Content-Type: application/json, yang memberi tahu server bahwa body yang dikirim adalah format JSON. Tanpa header ini, server kemungkinan gagal membaca isi data JSON. Header lain seperti Accept dan Connection adalah default dari Postman, tidak wajib diatur manual.
+
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20kamar%20villa/SS.png)
+Gambar di atas menunjukkan hasil response dari server setelah request dikirim. Response menunjukkan status 200 OK dan pesan JSON berupa "Kamar berhasil diperbarui." Ini menunjukkan bahwa server berhasil menerima dan memproses data sesuai logika program (controller dan repository). Status code dan pesan ini penting untuk memastikan bahwa request valid dan diterima oleh backend.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20kamar%20villa/Bukti%20db.png)
+Gambar di atas menunjukkan tampilan isi tabel room_types di database SQLite setelah update berhasil dilakukan. Baris dengan id = 36 berhasil ditambahkan, artinya data kamar tersebut sukses dimasukkan ke database. Sehingga hal ini membuktikan bahwa integrasi antara endpoint, controller, repository, dan database berjalan dengan sukses.
 
 ##### PUT Update Villa
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20villa/URL%20dan%20Body.png)
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20villa/SS.png)
+Gambar di atas menunjukkan bagaimana endpoint dipanggil menggunakan Postman. Method yang digunakan adalah PUT dengan URL lengkap http://localhost:8080/villas/11. Di tab Body, dipilih raw JSON dan diisi dengan data kamar baru yang akan diperbarui yakni: name, description, dan address.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20villa/Headers.png)
+Gambar di atas menunjukkan header yang digunakan dalam request PUT untuk update villa. Yang terpenting adalah Content-Type: application/json, yang memberi tahu server bahwa body yang dikirim adalah format JSON. Tanpa header ini, server kemungkinan gagal membaca isi data JSON. Header lain seperti Accept dan Connection adalah default dari Postman, tidak wajib diatur manual.
+
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20villa/SS.png)
+Gambar di atas menunjukkan hasil response dari server setelah request dikirim. Response menunjukkan status 200 OK dan pesan JSON berupa "Villa berhasil diperbarui." Ini menunjukkan bahwa server berhasil menerima dan memproses data sesuai logika program (controller dan repository). Status code dan pesan ini penting untuk memastikan bahwa request valid dan diterima oleh backend.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20villa/Bukti%20db.png)
+Gambar di atas menunjukkan tampilan isi tabel villas di database SQLite setelah update berhasil dilakukan. Baris dengan id = 11 berhasil ditambahkan, artinya data villa tersebut sukses dimasukkan ke database. Sehingga hal ini membuktikan bahwa integrasi antara endpoint, controller, repository, dan database berjalan dengan sukses.
+
 
 #### DELETE
 
 ##### DELETE Kamar Suatu Villa
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20room/URL.png)
+Gambar di atas menunjukkan penggunaan method DELETE pada endpoint http://localhost:8080/villas/11/rooms/36. Secara otomatis header Content-Type application/json diterapkan oleh Postman, meskipun tidak wajib untuk DELETE terutama DELETE tanpa body. Endpoint ini menargetkan penghapusan kamar dengan ID 36 yang termasuk dalam villa dengan ID 11.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20room/SS.png)
+Setelah permintaan DELETE dikirim, server merespons dengan status code 200 OK, yang berarti permintaan berhasil diproses. Body response berisi JSON dengan pesan: "Kamar berhasil dihapus.", yang merupakan konfirmasi bahwa kamar dengan ID tersebut sudah dihapus dari database. Ini menunjukkan bahwa server menjalankan proses DELETE sesuai logika di controller dan repository.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20room/Bukti%20db.png)
+Gambar di atas menunjukkan tampilan isi tabel room_types di database SQLite setelah penghapusan berhasil dilakukan. Baris dengan id = 36 sudah tidak ada, artinya kamar tersebut benar-benar telah dihapus dari basis data. Ini membuktikan bahwa integrasi antara endpoint, controller, repository, dan database berjalan dengan sukses.
 
 
 ##### DELETE Data Villa
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20villa/URL.png)
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20villa/SS.png)
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20villa/Bukti%20db.png)
+Gambar di atas menunjukkan penggunaan method DELETE pada endpoint http://localhost:8080/villas/11. Secara otomatis header Content-Type application/json diterapkan oleh Postman, meskipun tidak wajib untuk DELETE terutama DELETE tanpa body. Endpoint ini menargetkan penghapusan villa dengan ID = 11.
 
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20villa/SS.png)
+Setelah permintaan DELETE dikirim, server merespons dengan status code 200 OK, yang berarti permintaan berhasil diproses. Body response berisi JSON dengan pesan: "Villa berhasil dihapus.", yang merupakan konfirmasi bahwa Villa dengan ID = 11 sudah dihapus dari database. Ini menunjukkan bahwa server menjalankan proses DELETE sesuai logika di controller dan repository.
+
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20villa/Bukti%20db.png)
+Gambar di atas menunjukkan tampilan isi tabel villas di database SQLite setelah penghapusan berhasil dilakukan. Baris dengan id = 11 sudah tidak ada, artinya villa tersebut benar-benar telah dihapus dari database. Ini membuktikan bahwa integrasi antara endpoint, controller, repository, dan database berjalan dengan sukses
 
 
 
@@ -124,30 +183,49 @@
 
 ##### GET Semua Data Customer
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20all%20cust/URL.png)
+Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP GET pada URL http://localhost:8080/customers. Permintaan GET ini bertujuan untuk mengambil data dari server tanpa mengubah data di sisi server. Dalam kasus ini, pengguna cukup memasukkan URL lengkap ke dalam kolom alamat di Postman dan memilih metode GET tanpa perlu mengisi bagian body. Endpoint ini dapat digunakan untuk menampilkan seluruh data customer.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20all%20cust/SS%201.png)
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20all%20cust/SS%202.png)
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20all%20cust/SS%203.png)
+Gambar di atas menampilkan hasil respons dari server setelah permintaan GET dikirim. Data ditampilkan dalam format JSON yang berisi informasi yang diminta dari database. Jika permintaan berhasil diproses, server akan mengembalikan status HTTP 200 OK disertai dengan konten data yang sesuai, berupa JSON. Sesuai dengan gambar di atas, ditampilkan data dari semua customer.
 
 ##### GET Customer Berdasarkan Booking
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20booking/URL.png)
+Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP GET pada URL http://localhost:8080/customers/3/bookings. Permintaan GET ini bertujuan untuk mengambil data dari server tanpa mengubah data di sisi server. Dalam kasus ini, pengguna cukup memasukkan URL lengkap ke dalam kolom alamat di Postman dan memilih metode GET tanpa perlu mengisi bagian body. Endpoint ini dapat digunakan untuk menampilkan booking yang dilakukan oleh seorang customer berdasarkan ID-nya, dalam contoh di atas ID customer = 3.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20booking/SS.png)
+Gambar di atas menampilkan hasil respons dari server setelah permintaan GET dikirim. Data ditampilkan dalam format JSON yang berisi informasi yang diminta dari database. Jika permintaan berhasil diproses, server akan mengembalikan status HTTP 200 OK disertai dengan konten data yang sesuai, berupa JSON. Sesuai dengan gambar di atas, ditampilkan data booking yang telah dilakukan oleh customer dengan ID = 3.
 
 ##### GET Customer Berdasarkan Id
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20id/URL.png)
+Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP GET pada URL http://localhost:8080/customers/3. Permintaan GET ini bertujuan untuk mengambil data dari server tanpa mengubah data di sisi server. Dalam kasus ini, pengguna cukup memasukkan URL lengkap ke dalam kolom alamat di Postman dan memilih metode GET tanpa perlu mengisi bagian body. Endpoint ini dapat digunakan untuk menampilkan data seorang customer berdasarkan ID-nya, pada contoh ID customer = 3.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20id/SS.png)
+Gambar di atas menampilkan hasil respons dari server setelah permintaan GET dikirim. Data ditampilkan dalam format JSON yang berisi informasi yang diminta dari database. Jika permintaan berhasil diproses, server akan mengembalikan status HTTP 200 OK disertai dengan konten data yang sesuai, berupa JSON. Sesuai dengan gambar di atas, ditampilkan data dari salah satu customer yang memiliki ID = 3.
 
 ##### GET Customer Berdasarkan Review
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20review/URL.png)
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20review/SS.png)
+Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP GET pada URL http://localhost:8080/customers/1/reviews. Permintaan GET ini bertujuan untuk mengambil data dari server tanpa mengubah data di sisi server. Dalam kasus ini, pengguna cukup memasukkan URL lengkap ke dalam kolom alamat di Postman dan memilih metode GET tanpa perlu mengisi bagian body. Endpoint ini dapat digunakan untuk menampilkan suatu review yang dilakukan oleh seorang customer berdasarkan ID yan customer tersebut. Dalam contoh ini dicari review apa saja yang telah diberikan oleh customer dengan ID = 1.
 
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20review/SS.png)
+Gambar di atas menampilkan hasil respons dari server setelah permintaan GET dikirim. Data ditampilkan dalam format JSON yang berisi informasi yang diminta dari database. Jika permintaan berhasil diproses, server akan mengembalikan status HTTP 200 OK disertai dengan konten data yang sesuai, berupa JSON. Sesuai dengan gambar di atas, ditampilkan data review yang telah dilakukan oleh customer dengan ID = 1.
 
 
 #### POST
 ##### POST Data Customer Baru
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/URL.png)
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/SS.png)
+Gambar di atas menunjukkan penggunaan method POST pada endpoint http://localhost:8080/customers. Pada bagian Body, data dikirim dalam format JSON dan memuat atribut id, name, email, dan phone. Ini adalah data customer baru yang ingin ditambahkan ke sistem. Tab raw dan format JSON harus dipilih agar server dapat membaca datanya dengan benar.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/Headers.jpg)
+Gambar ini memperlihatkan semua header yang dikirim bersamaan dengan request POST. Yang paling penting adalah Content-Type: application/json yang menandakan bahwa body dikirim dalam bentuk JSON. Header lainnya seperti Host, User-Agent, dan Accept biasanya diisi otomatis oleh Postman.
+
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/SS.png)
+Gambar tersebut menampilkan response dari server setelah menerima permintaan POST. Status 201 Created menunjukkan bahwa customer berhasil ditambahkan ke database. Pesan JSON "Customer berhasil ditambahkan" dikembalikan dari controller sebagai tanda bahwa proses insert berhasil dijalankan melalui service dan repository.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/Bukti%20DB.png)
+Gambar di atas menunjukkan isi tabel customers dalam database setelah data ditambahkan. Customer baru dengan id = 13 dan nama "Angela Abigail Seubelan" kini tercatat di database, membuktikan bahwa data dari Postman berhasil disimpan ke database villa.db.
+
 .
 ##### POST Data Bookings Customer Baru
 ![image alt](https://github.com/user-attachments/assets/7e8326e9-fe11-43d8-97d6-9f7e26d97be9)
