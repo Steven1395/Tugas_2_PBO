@@ -56,21 +56,22 @@ public class VillaRepository {
         List<Villa> villas = new ArrayList<>();
 
         String sql = """
-                    SELECT DISTINCT v.*
-                    FROM villas v
-                    JOIN room_types r ON v.id = r.villa
-                    WHERE r.id NOT IN (
-                        SELECT b.room_type
-                        FROM bookings b
-                        WHERE b.checkin_date < ? AND b.checkout_date > ?
-                    )
-                """;
+            SELECT DISTINCT v.*
+            FROM villas v
+            JOIN room_types r ON v.id = r.villa
+            WHERE r.id NOT IN (
+                SELECT b.room_type
+                FROM bookings b
+                WHERE b.checkin_date < ?
+                AND b.checkout_date > ?
+            )
+        """;
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, coDate); // ini coDate dulu
-            stmt.setString(2, ciDate); // ini ciDate kedua
+            stmt.setString(1, coDate); // batas atas
+            stmt.setString(2, ciDate); // batas bawah
 
             ResultSet rs = stmt.executeQuery();
 
@@ -89,7 +90,7 @@ public class VillaRepository {
 
         return villas;
     }
-
+    
     public boolean insertVilla(Villa villa) {
         String sql = "INSERT INTO villas (id, name, description, address) VALUES (?, ?, ?, ?)";
 
