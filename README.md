@@ -22,7 +22,6 @@
        - [GET](#GET-Customer)
        - [POST](#POST-Customer)
        - [PUT](#PUT-Customer)
-       - [DELETE](#DELETE-Customer)
     - [Voucher](#Voucher)
        - [GET](#GET-Voucher)
        - [POST](#POST-Voucher)
