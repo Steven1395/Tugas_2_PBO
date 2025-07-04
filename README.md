@@ -1,4 +1,4 @@
-    ![image](https://github.com/user-attachments/assets/b9cf3244-1a91-4309-a8c9-8b56c57ab603)# Tugas_2_PBO
+# Tugas_2_PBO
 
 ## Nama Kelompok :
 - Steven Satyam Wijanarko (2405551036)
