@@ -279,6 +279,8 @@ Gambar tersebut menampilkan response dari server setelah menerima permintaan POS
 Gambar di atas menunjukkan isi tabel customers dalam database setelah data ditambahkan. Customer baru dengan id = 13 dan nama "Angela Abigail Seubelan" kini tercatat di database, membuktikan bahwa data dari Postman berhasil disimpan ke database villa.db.
 
 ##### POST Data Bookings Customer Baru
+Untuk menambahkan data booking pelanggan baru ke sistem, perlu mengirim permintaan POST ke endpoint http://localhost:8080/customers/10/bookings. Data booking ini akan dikirim melalui body request dalam format JSON. Setelah berhasil, data booking akan tersimpan di database dan Anda akan menerima respons JSON sebagai konfirmasi.
+
 ![image alt](https://github.com/user-attachments/assets/7e8326e9-fe11-43d8-97d6-9f7e26d97be9)
 Gambar di atas menunjukan penggunaan method POST pada endpoint http://localhost:8080/customers/10/bookings. Pada bagian Body, data dikirim dalam format JSON dan memuat atribut room_type, checkin_date, checkout_date, price, voucher, final_price, payment_status, has_checkdin, has_checkedout
 
@@ -292,6 +294,8 @@ Gambar ini memperlihatkan semua header yang dikirim bersamaan dengan request POS
 Gambar di atas menunjukkan isi tabel bookings dalam database setelah data ditambahkan. Bookings baru dengan id = 19 dan  id customer = 10 kini tercatat di database, membuktikan bahwa data dari Postman berhasil disimpan ke database villa.db.
 
 ##### POST Data Review Customers
+Untuk menambahkan data review pelanggan baru ke sistem, Anda perlu mengirim permintaan POST ke endpoint http://localhost:8080/customers/10/bookings/19/reviews. Data review ini akan dikirim melalui body request dalam format JSON. Setelah berhasil, data review akan tersimpan di database dan Anda akan menerima respons JSON sebagai konfirmasi
+
 ![image alt](https://github.com/user-attachments/assets/d8db0127-a8fb-4588-9db5-280a362da821)
 Gambar di atas menunjukan penggunaan method POST pada endpoint http://localhost:8080/customers/10/bookings/19/reviews. Pada bagian Body, data dikirim dalam format JSON dan memuat atribut star, title, content
 
@@ -305,6 +309,7 @@ Gambar ini memperlihatkan semua header yang dikirim bersamaan dengan request POS
 Gambar di atas menunjukkan isi tabel reviews dalam database setelah data ditambahkan. Review baru dengan id booking = 19 kini tercatat di database, membuktikan bahwa data dari Postman berhasil disimpan ke database villa.db.
 
 #### PUT Customer
+Untuk memperbarui data pelanggan yang sudah ada di sistem, Anda perlu mengirimkan permintaan PUT ke endpoint http://localhost:8080/customers/1. Anda akan menyertakan data pelanggan yang diperbarui di dalam body request dalam format JSON. Setelah berhasil, data pelanggan di database akan diperbarui, dan Anda akan menerima respons JSON sebagai konfirmasi.
 
 ##### PUT Mengubah Data Customer
 ![image alt](https://github.com/user-attachments/assets/7c5776c3-64c3-4fb8-8ec2-e3131cd7fc7a)
@@ -323,8 +328,11 @@ Gambar di atas menunjukkan isi customer dalam database setelah data diperbarui. 
 Voucher merupakan entitas yang berfungsi sebagai media pemberian potongan harga atau diskon kepada pelanggan saat melakukan pemesanan. Data voucher disimpan dalam tabel vouchers di database dan berisi informasi penting seperti kode voucher, deskripsi, nilai diskon (dalam bentuk persentase atau nominal), serta tanggal mulai dan berakhirnya masa berlaku voucher.
 
 #### GET Voucher
+Endpoint GET digunakan untuk mengambil atau membaca data dari server tanpa mengubah informasi yang ada di database. Endpoint GET untuk data pelanggan dapat menampilkan semua pelanggan, pelanggan berdasarkan ID spesifik, pelanggan yang terkait dengan pemesanan (booking), atau pelanggan berdasarkan ulasan (reviews) yang mereka berikan.
 
 ##### GET Semua Data Vouchers
+Untuk mendapatkan semua data voucher yang tersedia di sistem, Anda perlu mengirimkan permintaan GET ke endpoint /vouchers. Tidak ada body request yang diperlukan. Setelah berhasil, sistem akan mengembalikan respons dalam format JSON yang berisi daftar lengkap data voucher.
+
 ![image alt](https://github.com/user-attachments/assets/9e27dcc9-9fbe-4f13-8155-e11f6f1f552f)
 Gambar screenshot tersebut menunjukkan interface aplikasi Postman saat melakukan pengujian terhadap endpoint API GET /vouchers. Pada kolom URL terlihat bahwa permintaan dikirim ke http://localhost:8080/vouchers, yang berarti Postman melakukan pengambilan data daftar semua voucher dari server yang berjalan secara lokal di port 8080. Metode HTTP yang digunakan disini adalah GET untuk mendapatkan semua data voucher. Permintaan GET tidak memerlukan body, karena tujuannya adalah hanya untuk mengambil data dari server, bukan untuk mengirimkan atau memodifikasi informasi.
 
@@ -336,6 +344,8 @@ Gambar screenshot tersebut menunjukkan interface aplikasi Postman saat melakukan
 Gambar-gambar screenshot di atas menampilkan response yang diterima dari server setelah request GET berhasil diproses. Status code 200 OK menunjukkan bahwa permintaan diproses dengan baik tanpa error. Postman menampilkan seluruh informasi mengenai semua voucher dalam database.
 
 ##### GET Vouchers by ID
+Untuk mendapatkan data voucher spesifik berdasarkan ID-nya, Anda perlu mengirimkan permintaan GET ke endpoint /vouchers/2. Ganti {voucher_id} dengan ID voucher yang ingin Anda cari. Tidak ada body request yang diperlukan. Setelah berhasil, sistem akan mengembalikan respons dalam format JSON yang berisi data voucher yang sesuai dengan ID tersebut.
+
 ![image alt](https://github.com/user-attachments/assets/4aaf9d2a-03f1-43bd-a33e-9f3cb2a0f65c)
 Gambar di atas menunjukkan request yang dikirim melalui Postman untuk endpoint GET /vouchers/2. Dalam permintaan ini, method yang digunakan adalah GET, yang bertujuan untuk mengambil data detail dari voucher dengan Id 2, yaitu NEWUSER15.
 
@@ -343,8 +353,11 @@ Gambar di atas menunjukkan request yang dikirim melalui Postman untuk endpoint G
 Gambar screenshot di atas memperlihatkan respons dari server setelah permintaan GET dijalankan dengan sukses. Kode status 200 OK menandakan bahwa permintaan berhasil ditangani tanpa masalah. Postman kemudian menampilkan data lengkap voucher dari database villa.db.
 
 #### POST Voucher
+Endpoint POST Voucher berfungsi untuk menambahkan data terkait voucher. Data yang ditambahkan umumnya mencakup detail voucher baru. Permintaan ini dilakukan menggunakan metode POST, dengan data dikirim dalam format JSON melalui body permintaan.
 
 ##### POST Membuat Voucher Baru
+Untuk membuat voucher baru dan menambahkannya ke sistem, Anda perlu mengirimkan permintaan POST ke endpoint http://localhost:8080/vouchers. Detail voucher yang ingin Anda buat harus disertakan dalam body request dalam format JSON. Setelah permintaan berhasil, voucher baru akan tersimpan di database dan Anda akan menerima respons JSON sebagai konfirmasi.
+
 ![image alt](https://github.com/user-attachments/assets/f1c08ab0-3563-4fc6-8531-5cb8487f0b41)
 Gambar di atas menunjukan penggunaan method POST pada endpoint http://localhost:8080/vouchers. Pada bagian Body, data dikirim dalam format JSON dan memuat atribut code, discount, description, start_date, end_date.
 
@@ -358,8 +371,11 @@ Gambar ini memperlihatkan semua header yang dikirim bersamaan dengan request POS
 Gambar di atas menunjukkan isi tabel reviews dalam database setelah data ditambahkan. Voucher baru dengan id = 13 kini tercatat di database, membuktikan bahwa data dari Postman berhasil disimpan ke database villa.db.
 
 #### PUT Voucher
+Endpoint PUT Update Voucher digunakan untuk memperbarui informasi sebuah voucher berdasarkan ID. Data yang diperbarui dapat berupa code, discount, description, start_date, end_date. Permintaan dilakukan menggunakan method PUT dengan menyertakan data baru dalam format JSON pada body request.
 
 ##### PUT Update Vouchers
+Untuk memperbarui data voucher yang sudah ada, Anda perlu mengirimkan permintaan PUT ke endpoint /vouchers/{voucher_id}. Ganti {voucher_id} dengan ID voucher yang ingin Anda perbarui. Detail voucher yang diperbarui harus disertakan dalam body request dalam format JSON. Setelah permintaan berhasil, data voucher di database akan diperbarui dan Anda akan menerima respons JSON sebagai konfirmasi.
+
 ![image alt](https://github.com/user-attachments/assets/bc633345-f657-4653-851a-83077edfea91)
 Gambar di atas menunjukan penggunaan method POST pada endpoint http://localhost:8080/vouchers/2. Pada bagian Body, data dikirim dalam format JSON dan memuat code, discount, description, start_date, end_date.
 
@@ -373,8 +389,11 @@ Gambar ini memperlihatkan semua header yang dikirim bersamaan dengan request POS
 Gambar di atas menunjukkan isi customer dalam database setelah data diperbarui. data baru dengan id = 2 kini tercatat di database, membuktikan bahwa data dari Postman berhasil disimpan ke database villa.db.
 
 #### DELETE Voucher
+Endpoint DELETE Data Voucher digunakan untuk menghapus seluruh data sebuah voucher berdasarkan ID. Permintaan dilakukan menggunakan method DELETE ke endpoint /voucher/{id}.
 
 ##### DELETE Menghapus Voucher
+Untuk menghapus voucher dari sistem, Anda perlu mengirimkan permintaan DELETE ke endpoint /vouchers/{voucher_id}. Ganti {voucher_id} dengan ID voucher yang ingin Anda hapus. Tidak ada body request yang diperlukan. Setelah permintaan berhasil, voucher akan dihapus dari database dan Anda akan menerima respons JSON sebagai konfirmasi.
+
 ![image alt](https://github.com/user-attachments/assets/d1c2ecbd-7bf9-4c99-9902-3c222b803152)
 Gambar di atas menunjukkan penggunaan method DELETE pada endpoint http://localhost:8080/vouchers/2. Secara otomatis header Content-Type application/json diterapkan oleh Postman, meskipun tidak wajib untuk DELETE terutama DELETE tanpa body. Endpoint ini menargetkan penghapusan voucher dengan id = 2
 
