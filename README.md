@@ -70,7 +70,6 @@ Endpoint di atas digunakan untuk menampilkan semua data villa dalam format JSON.
 
 ## Screenshot Postman
 Untuk memastikan bahwa setiap endpoint dapat berfungsi dengan semestinya, kami melakukan pengujian secara menyeluruh menggunakan Postman, sebuah aplikasi yang sering dimanfaatkan oleh pengembang untuk mengirim request HTTP dan mengevaluasi tanggapan dari server. Melalui penggunaan Postman ini, kami dapat melakukan simulasi berbagai jenis permintaan seperti GET, POST, PUT, dan DELETE terhadap endpoint yang telah dibuat. Selain itu, kami juga memverifikasi apakah data yang dikembalikan oleh server telah sesuai dengan format JSON yang diharapkan serta memeriksa apakah kode status HTTP yang diterima sesuai dengan hasil dari proses yang terjadi pada server.
-  Note: Format untuk memasukkan gambar: ![image alt](Perma Link)
   
 ### Villa
 Villa merupakan entitas utama yang menjadi pusat dari seluruh sistem. Setiap villa mewakili properti akomodasi yang dapat disewa oleh pelanggan, dan memiliki atribut penting seperti nama villa, deskripsi, serta alamat lokasi. Data villa disimpan dalam tabel villas di dalam database SQLite, dan menjadi titik awal untuk entitas lainnya.
@@ -155,7 +154,10 @@ Gambar di atas menunjukkan bahwa data room_type dengan Id 36 telah berhasil dita
 
 
 #### PUT Villas
+Endpoint PUT Villas digunakan untuk memperbarui data-data yang berkaitan dengan villa. Data yang diubah biasanya mencakup informasi umum seperti update kamar ataupun update informasi villa tersebut. Permintaan dilakukan dengan method PUT dan data dikirim dalam format JSON melalui body request.
+
 ##### PUT Update Kamar Villa
+Endpoint PUT Update Kamar Villa digunakan untuk memperbarui informasi kamar pada vila tertentu. Perubahan dapat mencakup name, quantity, capacity dan price dari suatu kamar. Endpoint ini juga menggunakan method PUT dan memerlukan data yang diperbarui dalam bentuk JSON.
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20kamar%20villa/URL%20dan%20Body.png)
 Gambar di atas menunjukkan bagaimana endpoint dipanggil menggunakan Postman. Method yang digunakan adalah PUT dengan URL lengkap http://localhost:8080/villas/11/rooms/36. Di tab Body, dipilih raw JSON dan diisi dengan data kamar baru yang akan diperbarui yakni: id, name, quantity, capacity, dan price.
@@ -170,6 +172,7 @@ Gambar di atas menunjukkan hasil response dari server setelah request dikirim. R
 Gambar di atas menunjukkan tampilan isi tabel room_types di database SQLite setelah update berhasil dilakukan. Baris dengan id = 36 berhasil ditambahkan, artinya data kamar tersebut sukses dimasukkan ke database. Sehingga hal ini membuktikan bahwa integrasi antara endpoint, controller, repository, dan database berjalan dengan sukses.
 
 ##### PUT Update Villa
+Endpoint PUT Update Villa digunakan untuk memperbarui informasi sebuah vila berdasarkan ID. Data yang diperbarui dapat berupa name, description, dan address. Permintaan dilakukan menggunakan method PUT dengan menyertakan data baru dalam format JSON pada body request.
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/PUT/PUT%20update%20villa/URL%20dan%20Body.png)
 Gambar di atas menunjukkan bagaimana endpoint dipanggil menggunakan Postman. Method yang digunakan adalah PUT dengan URL lengkap http://localhost:8080/villas/11. Di tab Body, dipilih raw JSON dan diisi dengan data kamar baru yang akan diperbarui yakni: name, description, dan address.
@@ -185,8 +188,10 @@ Gambar di atas menunjukkan tampilan isi tabel villas di database SQLite setelah 
 
 
 #### DELETE Villas
+Endpoint DELETE Villas digunakan untuk menghapus data-data yang berkaitan dengan villa. Data yang dihapus biasanya mencakup informasi umum seperti update kamar ataupun update informasi villa tersebut. Permintaan dilakukan dengan method DEL.
 
 ##### DELETE Kamar Suatu Villa
+Endpoint DELETE Kamar Suatu Villa digunakan untuk menghapus data sebuah kamar tertentu yang dimiliki oleh suatu vila, berdasarkan ID vila dan ID kamar. Permintaan ini menggunakan method DELETE dan ditujukan ke endpoint /villas/{villa_id}/rooms/{room_id}, tanpa perlu menyertakan body request.
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20room/URL.png)
 Gambar di atas menunjukkan penggunaan method DELETE pada endpoint http://localhost:8080/villas/11/rooms/36. Secara otomatis header Content-Type application/json diterapkan oleh Postman, meskipun tidak wajib untuk DELETE terutama DELETE tanpa body. Endpoint ini menargetkan penghapusan kamar dengan ID 36 yang termasuk dalam villa dengan ID 11.
@@ -199,6 +204,7 @@ Gambar di atas menunjukkan tampilan isi tabel room_types di database SQLite sete
 
 
 ##### DELETE Data Villa
+Endpoint DELETE Data Villa digunakan untuk menghapus seluruh data sebuah vila berdasarkan ID. Permintaan dilakukan menggunakan method DELETE ke endpoint /villas/{id}.
 
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Villa/DEL/DEL%20villa/URL.png)
 Gambar di atas menunjukkan penggunaan method DELETE pada endpoint http://localhost:8080/villas/11. Secara otomatis header Content-Type application/json diterapkan oleh Postman, meskipun tidak wajib untuk DELETE terutama DELETE tanpa body. Endpoint ini menargetkan penghapusan villa dengan ID = 11.
@@ -214,8 +220,11 @@ Gambar di atas menunjukkan tampilan isi tabel villas di database SQLite setelah 
 Customer atau pelanggan merupakan entitas penting yang merepresentasikan pengguna akhir dari sistem, yaitu orang yang melakukan pemesanan villa. Data customer disimpan dalam tabel customers di database, dan mencakup informasi pribadi seperti nama, alamat email, dan nomor telepon.
 
 #### GET Customer
+Endpoint GET memiliki peran utama sebagai sarana untuk mengambil atau membaca data dari server tanpa melakukan perubahan apapun pada data yang tersimpan di database. Endpoint GET Customer dapat menampilkan data seluruh customer, customer berdasarkan ID, berdasarkan booking ataupun berdasarkan reviews yang dilakukan customer tersebut.
 
 ##### GET Semua Data Customer
+GET Semua Data Customer digunakan untuk mengambil seluruh data customer yang tersimpan di sistem. Data seluruh customer ini, nantinya akan ditampilkan dalam format JSON.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20all%20cust/URL.png)
 Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP GET pada URL http://localhost:8080/customers. Permintaan GET ini bertujuan untuk mengambil data dari server tanpa mengubah data di sisi server. Dalam kasus ini, pengguna cukup memasukkan URL lengkap ke dalam kolom alamat di Postman dan memilih metode GET tanpa perlu mengisi bagian body. Endpoint ini dapat digunakan untuk menampilkan seluruh data customer.
 
@@ -225,6 +234,8 @@ Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP 
 Gambar di atas menampilkan hasil respons dari server setelah permintaan GET dikirim. Data ditampilkan dalam format JSON yang berisi informasi yang diminta dari database. Jika permintaan berhasil diproses, server akan mengembalikan status HTTP 200 OK disertai dengan konten data yang sesuai, berupa JSON. Sesuai dengan gambar di atas, ditampilkan data dari semua customer.
 
 ##### GET Customer Berdasarkan Booking
+GET Customer Berdasarkan Booking digunakan untuk menampilkan daftar booking yang pernah dilakukan oleh seorang customer. Data dari endpoint ini nantinya akan ditampilkan dalam format JSON.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20booking/URL.png)
 Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP GET pada URL http://localhost:8080/customers/3/bookings. Permintaan GET ini bertujuan untuk mengambil data dari server tanpa mengubah data di sisi server. Dalam kasus ini, pengguna cukup memasukkan URL lengkap ke dalam kolom alamat di Postman dan memilih metode GET tanpa perlu mengisi bagian body. Endpoint ini dapat digunakan untuk menampilkan booking yang dilakukan oleh seorang customer berdasarkan ID-nya, dalam contoh di atas ID customer = 3.
 
@@ -232,6 +243,8 @@ Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP 
 Gambar di atas menampilkan hasil respons dari server setelah permintaan GET dikirim. Data ditampilkan dalam format JSON yang berisi informasi yang diminta dari database. Jika permintaan berhasil diproses, server akan mengembalikan status HTTP 200 OK disertai dengan konten data yang sesuai, berupa JSON. Sesuai dengan gambar di atas, ditampilkan data booking yang telah dilakukan oleh customer dengan ID = 3.
 
 ##### GET Customer Berdasarkan Id
+GET Customer Berdasarkan Id digunakan untuk menampilkan informasi dari satu customer tertentu berdasarkan ID. Data kemudian akan ditampilkan dalam format JSON.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20id/URL.png)
 Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP GET pada URL http://localhost:8080/customers/3. Permintaan GET ini bertujuan untuk mengambil data dari server tanpa mengubah data di sisi server. Dalam kasus ini, pengguna cukup memasukkan URL lengkap ke dalam kolom alamat di Postman dan memilih metode GET tanpa perlu mengisi bagian body. Endpoint ini dapat digunakan untuk menampilkan data seorang customer berdasarkan ID-nya, pada contoh ID customer = 3.
 
@@ -239,6 +252,8 @@ Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP 
 Gambar di atas menampilkan hasil respons dari server setelah permintaan GET dikirim. Data ditampilkan dalam format JSON yang berisi informasi yang diminta dari database. Jika permintaan berhasil diproses, server akan mengembalikan status HTTP 200 OK disertai dengan konten data yang sesuai, berupa JSON. Sesuai dengan gambar di atas, ditampilkan data dari salah satu customer yang memiliki ID = 3.
 
 ##### GET Customer Berdasarkan Review
+GET Customer Berdasarkan Review digunakan untuk menampilkan review yang pernah diberikan oleh customer. Data ini nantinya akan ditampilkan dalam format JSON.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/GET/GET%20cust%20by%20review/URL.png)
 Gambar di atas menunjukkan proses pengiriman permintaan menggunakan metode HTTP GET pada URL http://localhost:8080/customers/1/reviews. Permintaan GET ini bertujuan untuk mengambil data dari server tanpa mengubah data di sisi server. Dalam kasus ini, pengguna cukup memasukkan URL lengkap ke dalam kolom alamat di Postman dan memilih metode GET tanpa perlu mengisi bagian body. Endpoint ini dapat digunakan untuk menampilkan suatu review yang dilakukan oleh seorang customer berdasarkan ID yan customer tersebut. Dalam contoh ini dicari review apa saja yang telah diberikan oleh customer dengan ID = 1.
 
@@ -247,8 +262,11 @@ Gambar di atas menampilkan hasil respons dari server setelah permintaan GET diki
 
 
 #### POST Customer
+Endpoint POST Customer digunakan untuk menambahkan data-data yang berkaitan dengan customer. Data yang ditambahkan biasanya mencakup data customer baru, ataupun data booking dan review yang dilakukan customer tertentu. Permintaan dilakukan dengan method POST dan data dikirim dalam format JSON melalui body request.
 
 ##### POST Data Customer Baru
+Endpoint POST Customer digunakan untuk menambahkan data customer baru ke dalam sistem. Permintaan dilakukan dengan method POST ke endpoint /customers, dan data customer dikirim melalui body request dalam format JSON. Setelah permintaan berhasil, data customer akan disimpan ke dalam database dan respons akan dikembalikan dalam format JSON sebagai konfirmasi.
+
 ![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/003cf3c5abe94cc9046a342a62b1efba8ea214a4/SS%20Tugas%202/Customer/POST/Add%20Cust/URL.png)
 Gambar di atas menunjukkan penggunaan method POST pada endpoint http://localhost:8080/customers. Pada bagian Body, data dikirim dalam format JSON dan memuat atribut id, name, email, dan phone. Ini adalah data customer baru yang ingin ditambahkan ke sistem. Tab raw dan format JSON harus dipilih agar server dapat membaca datanya dengan benar.
 
