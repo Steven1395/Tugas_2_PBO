@@ -120,7 +120,11 @@ Gambar di atas menunjukkan proses pengujian endpoint GET /villas/5/reviews mengg
 Gambar screenshot di atas menampilkan response yang diterima dari server setelah request GET berhasil diproses. Status code 200 OK menunjukkan bahwa permintaan diproses dengan baik tanpa error. Postman menampilkan seluruh informasi mengenai review yang dimiliki vila dengan Id 5 dalam database.
 
 ##### GET Villa Berdasarkan Ketersediaan Room
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/8887b1a5f58fc31b06a3cbb1ad7b2c4f305202ce/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20availability/URL.png)
+Gambar di atas memperlihatkan pengujian terhadap endpoint GET /villas yang dilakukan melalui aplikasi Postman. Permintaan dikirim menggunakan metode GET ke alamat http://localhost:8080/villas?ci_date=2025-06-09&co_date=2025-06-16, dengan dua parameter yaitu ci_date sebagai tanggal check-in dan co_date sebagai tanggal check-out. Tanggal yang dimasukkan dalam permintaan ini adalah 9 Juni 2025 untuk check-in dan 16 Juni 2025 untuk check-out. Tujuan dari pengujian ini adalah untuk menyaring vila yang tersedia dalam rentang waktu tersebut, sehingga sistem hanya menampilkan vila yang belum dipesan atau masih bisa digunakan oleh pengguna pada tanggal tersebut.
 
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/8887b1a5f58fc31b06a3cbb1ad7b2c4f305202ce/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20availability/SS.png)
+Gambar di atas adalah respons yang diterima yang menunjukkan status 200 OK, yang berarti permintaan telah diproses dengan sukses tanpa terjadi kesalahan. Di bagian Body, ditampilkan data dalam bentuk array JSON yang memuat kumpulan informasi vila. Setiap vila memiliki beberapa atribut, antara lain id, name, description, dan address. Terdapat vila dengan Id 1 yang bernama Villa Lega dan berlokasi di Solok, serta vila lainnya dengan Id 2 bernama Villa Hani yang terletak di Palangkaraya.
 
 #### POST Villas
 Endpoint POST berfungsi sebagai jalur untuk mengirim dan menyimpan data baru ke dalam sistem. Endpoint ini digunakan saat ada proses penambahan informasi, baik itu vila maupun tipe kamar yang dimiliki vila tersebut. Dengan metode POST, sistem dapat menerima data dari klien dalam format JSON dan menyimpannya secara permanen ke dalam database SQLite.
