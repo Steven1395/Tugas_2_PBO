@@ -70,80 +70,88 @@ Endpoint di atas digunakan untuk menampilkan semua data villa dalam format JSON.
 
 ## Screenshot Postman
 Untuk memastikan bahwa setiap endpoint dapat berfungsi dengan semestinya, kami melakukan pengujian secara menyeluruh menggunakan Postman, sebuah aplikasi yang sering dimanfaatkan oleh pengembang untuk mengirim request HTTP dan mengevaluasi tanggapan dari server. Melalui penggunaan Postman ini, kami dapat melakukan simulasi berbagai jenis permintaan seperti GET, POST, PUT, dan DELETE terhadap endpoint yang telah dibuat. Selain itu, kami juga memverifikasi apakah data yang dikembalikan oleh server telah sesuai dengan format JSON yang diharapkan serta memeriksa apakah kode status HTTP yang diterima sesuai dengan hasil dari proses yang terjadi pada server.
-  Note: Format untuk memasukkan gambar: ![image alt](Perma Link).
+  Note: Format untuk memasukkan gambar: ![image alt](Perma Link)
   
 ### Villa
 Villa merupakan entitas utama yang menjadi pusat dari seluruh sistem. Setiap villa mewakili properti akomodasi yang dapat disewa oleh pelanggan, dan memiliki atribut penting seperti nama villa, deskripsi, serta alamat lokasi. Data villa disimpan dalam tabel villas di dalam database SQLite, dan menjadi titik awal untuk entitas lainnya.
 
 #### GET Villas
-  
+Endpoint GET memiliki peran utama sebagai sarana untuk mengambil atau membaca data dari server tanpa melakukan perubahan apapun pada data yang tersimpan di database. Endpoint dengan metode GET digunakan untuk menyediakan berbagai jenis informasi kepada pengguna, mulai dari daftar seluruh vila, detail satu vila tertentu, hingga informasi tambahan seperti tipe kamar, data pemesanan, ulasan pelanggan, dan ketersediaan vila.
 
 ##### GET Semua Data Villa
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa/URL.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa/URL.png)
 Gambar screenshot tersebut menunjukkan interface aplikasi Postman saat melakukan pengujian terhadap endpoint API GET /villas. Pada kolom URL terlihat bahwa permintaan dikirim ke http://localhost:8080/villas, yang berarti Postman melakukan pengambilan data daftar semua vila dari server yang berjalan secara lokal di port 8080. Metode HTTP yang digunakan disini adalah GET untuk mendapatkan semua data villa. Permintaan GET tidak memerlukan body, karena tujuannya adalah hanya untuk mengambil data dari server, bukan untuk mengirimkan atau memodifikasi informasi.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa/SS%201.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa/SS%201.png)
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa/SS%202.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa/SS%202.png)
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa/SS%203.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa/SS%203.png)
 Gambar-gambar screenshot di atas menampilkan response yang diterima dari server setelah request GET berhasil diproses. Status code 200 OK menunjukkan bahwa permintaan diproses dengan baik tanpa error. Postman menampilkan seluruh informasi mengenai semua villa dalam database.
 
 ##### GET Villa Berdasarkan Id
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20id/URL.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20id/URL.png)
 Gambar di atas menunjukkan request yang dikirim melalui Postman untuk endpoint GET /villas/3. Dalam permintaan ini, method yang digunakan adalah GET, yang bertujuan untuk mengambil data detail dari vila dengan Id 3, yaitu Villa Steve.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20id/SS.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20id/SS.png)
 Gambar screenshot di atas memperlihatkan hasil dari server setelah permintaan GET dijalankan dengan sukses. Status 200 OK mengindikasikan bahwa server dapat menangani permintaan tersebut dengan lancar dan tidak menemui kendala apa pun. Postman menampilkan seluruh informasi mengenai vila dengan Id 3 dalam database.
 
 ##### GET Villa Berdasarkan Room
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20room/URL.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20room/URL.png)
 Gambar di atas memperlihatkan permintaan yang dilakukan melalui Postman ke endpoint GET /villas/3/rooms. Pada permintaan ini digunakan metode GET, yang digunakan untuk mengambil informasi lengkap mengenai kamar yang dimiliki vila dengan Id 3, yaitu Villa Steve.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20room/SS%201.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20room/SS%201.png)
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20room/SS%202.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20room/SS%202.png)
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20room/SS%203.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20room/SS%203.png)
 Gambar screenshot di atas memperlihatkan respons dari server setelah permintaan GET dijalankan dengan sukses. Kode status 200 OK menandakan bahwa permintaan berhasil ditangani tanpa masalah. Postman kemudian menampilkan data lengkap dari kamar yang dimiliki vila dengan Id 3, yaitu Villa Steve yang terdapat dalam database.
 
 ##### GET Villa Berdasarkan Booking
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20booking/URL.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20booking/URL.png)
 Gambar di atas menunjukkan request yang dikirim melalui Postman untuk endpoint GET /villas/3/bookings. Tujuan dari permintaan ini adalah untuk mengambil seluruh data booking yang berkaitan dengan vila dengan Id 3, yaitu Villa Steve. Permintaan dikirim menggunakan metode HTTP GET agar dapat mengambil seluruh data booking.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20booking/SS.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20booking/SS.png)
 Gambar screenshot di atas memperlihatkan hasil dari server setelah permintaan GET dijalankan dengan sukses. Status 200 OK mengindikasikan bahwa server dapat menangani permintaan tersebut dengan lancar dan tidak menemui kendala apa pun. Postman menampilkan seluruh informasi mengenai booking pada vila dengan Id 3, yaitu Villa Steve.
 
 ##### GET Villa Berdasarkan Review
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20review/URL.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20review/URL.png)
 Gambar di atas menunjukkan proses pengujian endpoint GET /villas/5/reviews menggunakan aplikasi Postman. Tujuan dari permintaan ini adalah untuk mengambil seluruh data review yang terkait dengan vila dengan Id 5. Permintaan dikirim dengan metode GET, yang artinya klien hanya ingin membaca atau mengambil data dari server tanpa mengubahnya.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20review/SS.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/GET/GET%20villa%20by%20review/SS.png)
 Gambar screenshot di atas menampilkan response yang diterima dari server setelah request GET berhasil diproses. Status code 200 OK menunjukkan bahwa permintaan diproses dengan baik tanpa error. Postman menampilkan seluruh informasi mengenai review yang dimiliki vila dengan Id 5 dalam database.
 
 ##### GET Villa Berdasarkan Ketersediaan Room
 
 
 #### POST Villas
+Endpoint POST berfungsi sebagai jalur untuk mengirim dan menyimpan data baru ke dalam sistem. Endpoint ini digunakan saat ada proses penambahan informasi, baik itu vila maupun tipe kamar yang dimiliki vila tersebut. Dengan metode POST, sistem dapat menerima data dari klien dalam format JSON dan menyimpannya secara permanen ke dalam database SQLite.
 
 ##### POST Data Villa Baru
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20villa/URL%20beserta%20Body.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20villa/URL%20beserta%20Body.png)
+Gambar di atas memperlihatkan proses pengujian endpoint POST /villas menggunakan aplikasi Postman, yang berfungsi untuk menambahkan data villa baru ke dalam sistem. Permintaan ini dikirim dengan menggunakan metode POST. Pada bagian Body, opsi raw dipilih dengan format JSON, yang menunjukkan bahwa data dikirim dalam bentuk teks berstruktur JSON. Konten dari body mencakup informasi detail mengenai vila yang akan ditambahkan, yaitu vila dengan Id 11 dan nama "Villa Santoso".
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20villa/Headers.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20villa/Headers.png)
+Gambar di atas menunjukkan hasil pengujian endpoint POST /villas menggunakan Postman. Metode ini dilengkapi dengan beberapa header penting, seperti Content-Type: application/json yang menandakan bahwa data dikirim dalam format JSON.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20villa/SS.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20villa/SS.png)
+Gambar di atas merupakan respons yang dikembalikan dengan status 201 Created, yang menunjukkan bahwa data berhasil ditambahkan ke database. Respons JSON yang dikembalikan server berisi pesan "message": "Villa berhasil ditambahkan", sebagai tanda bahwa permintaan diterima dan vila baru telah dicatat dengan sukses.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20villa/Bukti%20db.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20villa/Bukti%20db.png)
+Gambar di atas menunjukkan bahwa data vila dengan Id 11, yaitu "Villa Santoso" berhasil ditambahkan ke dalam database.
 
 ##### POST Data Room Baru
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/URL%20dan%20Body.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/URL%20dan%20Body.png)
+Gambar di atas memperlihatkan proses pengujian endpoint POST /villas/11/rooms melalui aplikasi Postman, dengan tujuan untuk menambahkan room_type baru ke dalam vila yang memiliki Id 11. Permintaan ini menggunakan metode POST, yang digunakan untuk mengirimkan dan menyimpan data baru ke server. Pada tab Body, dipilih format raw dengan tipe konten JSON, di mana dikirimkan data kamar yang mencakup Id kamar "id: 36" dan nama kamar "Room 1 - Villa Santoso".
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/Headers.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/Headers.png)
+Gambar di atas adalah Tab Headers yang memperlihatkan bahwa permintaan ini dilengkapi dengan header penting seperti Content-Type: application/json, yang menunjukkan bahwa data dikirim dalam format JSON, serta beberapa header umum lainnya seperti Accept dan Connection.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/SS.png).
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/SS.png)
+Gambar di atas menampilkan hasil respons dari server setelah dilakukan pengujian endpoint POST untuk menambahkan tipe kamar pada sistem pemesanan vila menggunakan Postman. Dapat terlihat bahwa server memberikan status HTTP 201 Created, yang menunjukkan bahwa data berhasil ditambahkan ke dalam database. Server mengembalikan objek JSON yang berisi pesan: "message": "Tipe kamar berhasil ditambahkan.", sebagai konfirmasi bahwa proses penyimpanan data berjalan lancar.
 
-![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/Bukti%20db.png).
-
+![image alt](https://github.com/Steven1395/Tugas_2_PBO/blob/68a323b82184672c41a8d80c33be1cb894b87dae/SS%20Tugas%202/Villa/POST/POST%20insert%20rooms%20villa/Bukti%20db.png)
+Gambar di atas menunjukkan bahwa data room_type dengan Id 36 telah berhasil ditambahkan ke vila yang memiliki Id 11, yaitu "Villa Santoso" dalam database.
 
 
 #### PUT Villas
